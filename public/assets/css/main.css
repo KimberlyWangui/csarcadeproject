@@ -128,19 +128,10 @@ body {
     }
   }
   
-  .navbar-nav .nav-link.dropdown-toggle {
-    color: #fff;
-  }
- 
-  .navbar-nav .dropdown-menu .dropdown-item {
-    color: #000; 
-    transition: background-color 0.3s; 
-  }
-  
-  /* Change background color on hover */
-  .navbar-nav .dropdown-menu .dropdown-item:hover {
-    background-color: #DA70D6; 
-    color: #fff; 
+  @media (max-width: 767px) {
+    .navbar-nav {
+      flex-direction: column; /* Stack items vertically on small screens */
+    }
   }
   *, *::before, *::after {
     box-sizing: border-box;

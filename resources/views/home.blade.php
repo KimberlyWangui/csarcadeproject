@@ -83,7 +83,7 @@
                 <!-- navbar collapse -->
 
                 <div class="button">
-                  <a href="buytickets.php" class="btn" >Get Tickets<i class="lni lni-ticket"></i
+                  <a href="buytickets.php" class="btn" > Get Tickets<i class="lni lni-ticket"></i
                   ></a>
                   <!-- use of line icons for the ticket icon-->
                 </div>
