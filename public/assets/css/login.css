@@ -1,0 +1,95 @@
+body, html {
+    background-color: #5D3FD3;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: Arial, serif;
+}
+
+#container {
+    display: flex;
+    height: 100vh;
+}
+
+.sidebar {
+    width: 40%;
+    background-color: #f8f8f8;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.sidebar-content {
+    width: 100%; /* Ensure the content takes full width */
+    height: 100%; /* Ensure the content takes full height */
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sidebar-video {
+    width: 100%;
+    height: 100%;
+    
+    object-fit: cover; }
+
+
+
+.main-content {
+    flex: 1; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+   color: #fff;
+}
+
+h2{
+    margin-bottom: 20px;
+    
+}
+
+
+button {
+    background-color: 	#DE3163;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    padding: 20px 40px; /* Increase padding */
+    margin-bottom: 10px; /* Increase margin */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: cyan;
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    margin: 15px 0;
+    color: #fff;
+}
+
+.divider hr {
+    height: 1px; 
+    flex: 1;
+    border: none;
+    border-bottom: 1px solid white;
+    margin: 0 10px;
+}
+
+
+
+.divider span {
+    font-size: 14px;
+}
+
+
+.main-content > * {
+    text-align: center;
+}
