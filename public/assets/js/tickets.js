@@ -19,3 +19,34 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+let selectedGamesCount = 0;
+
+    $('.quantity-input').on('change', function () {
+        const totalGames = parseInt($(this).val());
+        if (totalGames > 7) {
+            $('#quantity0').attr('disabled', true);
+            $('#quantity1').attr('disabled', true);
+        }
+        if (totalGames > 10) {
+            $('#quantity2').attr('disabled', true);
+        }
+        if (totalGames > 12) {
+            $('#quantity3').attr('disabled', true);
+        }
+    });
+
+    $('.add-to-cart').on('click', function () {
+        selectedGamesCount += parseInt($(this).prev().find('.quantity-input').val());
+        $('#selected-games-count').val(selectedGamesCount);
+        if (selectedGamesCount > 7) {
+            $('#quantity0').attr('disabled', true);
+            $('#quantity1').attr('disabled', true);
+        }
+        if (selectedGamesCount > 10) {
+            $('#quantity2').attr('disabled', true);
+        }
+        if (selectedGamesCount > 12) {
+            $('#quantity3').attr('disabled', true);
+        }
+    });

@@ -211,10 +211,11 @@
 </div>
 
 <div class="container1">
-    <div class="button">
-      <a href="#learnmore" class="btn2">See More</a>
-    </div>
-    </div>           
+  <div class="button">
+    <a href="{{ route('games.dispGames') }}" class="btn2">See More</a>
+</div>
+</div>
+           
           <!-- End features Section-->
 
            
