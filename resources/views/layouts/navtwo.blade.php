@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/glightbox/3.1.0/glightbox.min.css" />
     <link rel="stylesheet" href="{{asset('assets/css/main.css')}}" />
     <link href="{{ asset('assets/css/tickets.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/games.css') }}" rel="stylesheet">
+
 </head>
 <body>
       <!--Header code -->

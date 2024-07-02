@@ -209,3 +209,7 @@
 </script>
 
 @endsection
+@section('scripts')
+
+<script src="{{ asset('assets/js/tickets.js') }}"></script>
+@endsection
