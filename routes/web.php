@@ -4,6 +4,7 @@ use App\Http\Controllers\GameController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
 
 Route::get('/', function () {
     return view('home');
@@ -42,3 +43,6 @@ Route::delete('/games/{game}', [GameController::class, 'destroy'])->name('games.
 
 // Route for displaying games (dispgames.nblade.php)
 Route::get('/dispgames', [GameController::class, 'dispGames'])->name('games.dispGames');
+
+//Route for the admin page
+Route::get('admin/dashboard', [AdminController::class, 'index'])->middleware(['auth','admin']);
