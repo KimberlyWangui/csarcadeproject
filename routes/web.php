@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Admin\GameSectionController;
 
 Route::get('/', function () {
     return view('home');
@@ -45,4 +47,21 @@ Route::delete('/games/{game}', [GameController::class, 'destroy'])->name('games.
 Route::get('/dispgames', [GameController::class, 'dispGames'])->name('games.dispGames');
 
 //Route for the admin page
-Route::get('admin/dashboard', [AdminController::class, 'index'])->middleware(['auth','admin']);
+//Route::get('admin/dashboard', [AdminController::class, 'index'])->middleware(['auth','admin'])->name('admin.dashboard');
+
+//Route for the admin page
+Route::group(['middleware' => ['auth', 'admin']], function () {
+   Route::get('admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+   Route::get('admin/role-register', [DashboardController::class, 'registered']);
+   //Route::get('admin/role-edit/{userid}', [DashboardController::class, 'registeredit']);//
+   Route::get('admin/role-edit/{userid}', [DashboardController::class, 'registeredit'])->name('admin.register-edit');
+   Route::put('admin/role-register-update/{userid}', [DashboardController::class, 'registerupdate']);
+   Route::delete('admin/role-delete/{userid}', [DashboardController::class, 'registerdelete']);
+
+   Route::get('admin/games', [GameSectionController::class, 'index']);
+   Route::post('admin/save-games', [GameSectionController::class, 'store']);
+   Route::get('admin/edit-games/{game_id}', [GameSectionController::class, 'edit']);
+   Route::put('admin/game-edit/{game_id}', [GameSectionController::class, 'update']);
+   Route::delete('admin/game-delete/{game_id}', [GameSectionController::class, 'delete']);
+
+});
