@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="{{asset('assets/css/main.css')}}" />
     <link href="{{ asset('assets/css/tickets.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/games.css') }}" rel="stylesheet">
-
+    <link href="{{ asset('assets/css/cart.css') }}" rel="stylesheet">
 </head>
 <body>
       <!--Header code -->
@@ -67,6 +67,8 @@
                       <li class="nav-item">
                         <a class="page-scroll" href="/login">Sign In</a>
                       </li>
+                      
+                      
                     </ul>
                   </div>
   
@@ -76,6 +78,7 @@
   
       </nav>
        <!-- End of Navbar -->
+    
        </div>
             </div>
           </div>
@@ -156,5 +159,6 @@
         </div>
     </footer>
     <script src="{{ asset('assets/js/tickets.js') }}"></script>
+    <script src="{{ asset('assets/js/games.js') }}"></script>
 </body>
 </html>

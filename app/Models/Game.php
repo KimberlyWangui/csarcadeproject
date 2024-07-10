@@ -9,6 +9,12 @@ class Game extends Model
 {
     use HasFactory;
     protected $primaryKey = 'game_id';
-    public $incrementing = true; // Ensure this is set to true
+    public $incrementing = true; 
     protected $fillable = ['name', 'video_path', 'description'];
+
+
+    public function tickets()
+    {
+        return $this->belongsToMany(Ticket::class, 'game_ticket', 'game_id', 'ticket_id');
+    }
 }

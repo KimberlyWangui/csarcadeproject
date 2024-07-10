@@ -1,10 +1,12 @@
+@import '../../../../codyhouse-framework/main/assets/css/style.scss'; 
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700'); 
 .container5 {
-    width: 100%; /* Adjust as needed */
-    max-width: 1200px; /* Example maximum width */
+    width: 100%;
+    max-width: 1200px;
     height: 600px;
     padding: 50px;
     overflow: hidden;
-    margin: 0 auto; /* Horizontal centering */
+    margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -74,15 +76,16 @@
 
 .itemz:nth-child(2) .content {
     display: block;
-    z-index: 11111;
+    z-index: 2;
 }
 
 .itemz video {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Ensures video fills its container */
+    object-fit: cover;
     border-radius: inherit;
 }
+
 .itemz .name {
     font-size: 40px;
     font-weight: bold;
@@ -116,7 +119,6 @@
     }
 }
 
-
 .additional-content {
     position: absolute;
     top: 50%;
@@ -138,21 +140,22 @@
 .buttons5 {
     position: absolute;
     bottom: 30px;
-    z-index: 222222;
+    z-index: 3;
     text-align: center;
     width: 100%;
+    padding: 10px;
 }
 
 .buttons5 button {
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    border: 1px solid #555;
+    border: none;
     transition: 0.5s;
 }
 
 .buttons5 button:hover {
-    background-color: #bac383;
+    background-color: #60b0d2;
 }
 
 .see-more, .go-back {
@@ -163,7 +166,7 @@
 .add-to-cart {
     display: inline-block;
     margin-top: 10px;
-    background-color: #4CAF50; /* Green */
+    background-color: #4CAF50;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -171,5 +174,37 @@
 }
 
 .add-to-cart:hover {
+    background-color: #45a049;
+}
+
+.proceed-to-tickets {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.btn-proceed {
+    display: inline-block;
+    margin-top: 10px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    transition: background-color 0.3s;
+}
+
+.btn-proceed:hover {
+    background-color: #45a049;
+}
+
+.btn-view-cart{
+    display: inline-block;
+    margin-top: 10px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    transition: background-color 0.3s;
+}
+.btn-view-cart:hover {
     background-color: #45a049;
 }

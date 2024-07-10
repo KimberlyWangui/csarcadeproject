@@ -4,23 +4,26 @@ document.addEventListener('DOMContentLoaded', function () {
     const slide = document.getElementById('slide');
     const items = document.querySelectorAll('.itemz');
 
+    // Initial setup for each game item
     items.forEach(item => {
         const video = item.querySelector('video');
         const seeMoreButton = item.querySelector('.see-more');
         const additionalContent = item.querySelector('.additional-content');
         const content = item.querySelector('.content');
         const goBackButton = item.querySelector('.go-back');
+        const addToCartButton = item.querySelector('.add-to-cart');
 
+        // Video play/pause on hover
         item.addEventListener('mouseover', () => {
             video.play();
         });
 
         item.addEventListener('mouseleave', () => {
             video.pause();
-            video.currentTime = 0; // Reset the video to the start
+            video.currentTime = 0;
         });
 
-        // Show additional content and hide original content on "See more" button click
+        // Expand additional content
         seeMoreButton.addEventListener('click', () => {
             content.style.opacity = '0';
             setTimeout(() => {
@@ -32,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }, 500);
         });
 
-        // Hide additional content and show original content on "Go Back" button click
+        // Collapse additional content
         goBackButton.addEventListener('click', () => {
             additionalContent.style.opacity = '0';
             setTimeout(() => {
@@ -42,6 +45,28 @@ document.addEventListener('DOMContentLoaded', function () {
                     content.style.opacity = '1';
                 }, 10);
             }, 500);
+        });
+
+        // Add to cart functionality
+        addToCartButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            const gameId = this.getAttribute('data-game-id');
+            
+            fetch(`/cart/add/${gameId}`, { // Corrected template literal syntax
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error adding game to cart');
+            });
         });
     });
 

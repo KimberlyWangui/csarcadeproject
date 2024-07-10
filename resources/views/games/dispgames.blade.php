@@ -3,30 +3,39 @@
 @section('title', 'Display Games')
 
 @section('content')
-
-    <div class="container5">
-        <div id="slide">
-            @for ($i = 1; $i <= 18; $i++)
-                <div class="itemz" id="itemz-{{ $i }}">
-                    <video src="{{ asset('assets/videos/video' . $i . '.mp4') }}"></video>
-                    <div class="content" id="content-{{ $i }}">
-                        <div class="name">Game {{ $i }}</div>
-                        <div class="des">Description for Game {{ $i }}</div>
-                        <button class="see-more" data-game-id="{{ $i }}">See more</button>
-                    </div>
-                    <div class="additional-content" id="additional-content-{{ $i }}">
-                        <div class="more-details">More details about Game {{ $i }}</div>
-                        <button class="add-to-cart">Add to Cart</button>
-                        <button class="go-back" data-game-id="{{ $i }}">Go Back</button>
-                    </div>
-                </div>
-            @endfor
+<div class="container5">
+    <div id="slide">
+        @foreach($games as $index => $game)
+        <div class="itemz" id="itemz-{{ $game->game_id }}">
+            <video src="{{ asset($game->video_path) }}"></video>
+            <div class="content" id="content-{{ $game->game_id }}">
+                <div class="name">{{ $game->name }}</div>
+                <div class="des">{{ $game->description }}</div>
+                <button class="see-more" data-game-id="{{ $game->game_id }}">See more</button>
+            </div>
+            <div class="additional-content" id="additional-content-{{ $game->game_id }}">
+                <div class="more-details">If you would like to add {{ $game->name }} to cart, please click the button below.</div>
+                
+                <button class="add-to-cart" data-game-id="{{ $game->game_id }}">
+                    Add to Cart <i class="lni lni-cart"></i>
+                </button>
+                
+                <button class="go-back" data-game-id="{{ $game->game_id }}">Go Back</button>
+            </div>
         </div>
-        <div class="buttons5">
-            <button id="prev"><i class="fa-solid fa-angle-left"></i></button>
-            <button id="next"><i class="fa-solid fa-angle-right"></i></button>
-        </div>
+        @endforeach
     </div>
+    <div class="buttons5">
+        <button id="prev"><i class="lni lni-angle-double-left"></i></button>
+        <button id="next"><i class="lni lni-angle-double-right"></i></button>
+    </div>
+</div>
 
-    <script src="{{ asset('/assets/js/games.js') }}"></script>
+<div class="proceed-to-tickets">
+    <a href="{{ route('buy.tickets') }}" class="btn-proceed" id="proceed-to-tickets">Proceed to Tickets</a>
+    <a href="{{ route('cart.index') }}" class="btn-view-cart">View Cart</a>
+</div>
+
+<meta name="csrf-token" content="{{ csrf_token() }}">
+<script src="{{ asset('/assets/js/games.js') }}"></script>
 @endsection

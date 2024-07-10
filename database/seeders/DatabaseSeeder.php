@@ -21,5 +21,10 @@ class DatabaseSeeder extends Seeder
 
         // Add this line to call the GamesTableSeeder
         $this->call(GamesTableSeeder::class);
+        $this->call(CartSeeder::class);
+        
+        $this->call(GameTicketSeeder::class);   
+            
+      
     }
 }
