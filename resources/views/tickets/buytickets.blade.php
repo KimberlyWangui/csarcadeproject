@@ -85,17 +85,18 @@
 
         <div class="proceed-to-tickets">
            
-            <a href="{{ route('cart.show') }}" class="btn-view-cart">View Cart</a>
+            <a href="{{ route('cart.show') }}" class="btn-view-cart">Guest Cart</a>
         </div>
 
         <!-- Proceed Button Section -->
         <div class="row justify-content-center">
-            <div class="col-md-4 text-center text-white">
-                <h5>Once you are done, click below to proceed</h5>
-                <button class="btn btn-success proceed-btn mt-3">Proceed <strong>>></strong></button>
-            </div>
+           
+        <div class="col-md-4 text-center text-white">
+            <h5>Once you are done, click below to proceed</h5>
+            
+            <a href="{{ route('cart.checkout') }}" class="btn-view-cart">Proceed </a>
         </div>
-
+    </div>
         <!-- Bottom Spacer -->
         <div class="row mt-5"></div>
 

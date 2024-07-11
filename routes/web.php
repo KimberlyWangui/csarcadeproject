@@ -97,4 +97,6 @@ Route::post('/cart/add/{id}', [TicketCartController::class, 'addToCart'])->name(
 Route::post('/cart/remove', [TicketCartController::class, 'removeCartItem'])->name('cart.remove');
 Route::post('/cart/clear', [TicketCartController::class, 'clearCart'])->name('cart.clear');
 Route::post('/cart/update', [TicketCartController::class, 'updateQuantity'])->name('cart.update');
+Route::get('/checkout', [TicketCartController::class, 'showCheckout'])->name('cart.checkout');
+Route::post('/process-payment', [TicketCartController::class, 'processPayment'])->name('cart.process-payment');
 

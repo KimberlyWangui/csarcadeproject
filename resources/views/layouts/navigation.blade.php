@@ -37,6 +37,10 @@
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Manage Profile') }}
                         </x-dropdown-link>
+                        
+                            <x-dropdown-link :href="route('cart.show')">
+                                {{ __('Add to cart') }}
+                            </x-dropdown-link>
 
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">

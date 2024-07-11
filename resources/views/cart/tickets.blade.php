@@ -47,7 +47,7 @@
 </div>
 
 <div class="cart-actions">
-    <a href="{{ route('buy.tickets') }}" class="btn btn-proceed">Proceed to Checkout</a>
+    <a href="{{ route('cart.checkout') }}" class="btn btn-proceed">Proceed to Checkout</a>
     <a href="{{ route('tickets.list') }}" class="btn btn-continue-shopping">Continue Shopping</a>
 </div>
 @endsection

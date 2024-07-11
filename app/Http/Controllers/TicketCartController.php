@@ -88,4 +88,17 @@ class TicketCartController extends Controller
         }
         return response()->json(['success' => false]);
     }
+    public function showCheckout()
+    {
+        $cartItems = session()->get('cart', []);
+        return view('payment.pay', compact('cartItems'));
+    }
+
+    public function processPayment(Request $request)
+{
+    // Handle payment processing logic here
+    // After successful payment, clear the cart and redirect to a confirmation page
+    session()->forget('cart');
+    return redirect()->route('payment.confirmation')->with('success', 'Payment processed successfully!');
+}
 }
