@@ -13,36 +13,12 @@ class TicketController extends Controller
      * @return \Illuminate\View\View
      */
     public function buyTickets()
-    {
-        $tickets = [
-            [
-                'video' => 'kids.mp4',
-                'title' => 'Child Ticket',
-                'description' => 'Package of 8 games per hour and 50 points awarded to those with an account.',
-                'price' => '700 KSH',
-            ],
-            [
-                'video' => 'grown.mp4',
-                'title' => 'Adult Ticket',
-                'description' => 'Package of 9 games per hour and 90 points awarded to those with an account.',
-                'price' => '850 KSH',
-            ],
-            [
-                'video' => 'fam.mp4',
-                'title' => 'Family Package',
-                'description' => 'Package of 15 games per hour and 150 points awarded to those with an account.',
-                'price' => '1500 KSH',
-            ],
-            [
-                'video' => 'groupz.mp4',
-                'title' => 'Group package',
-                'description' => 'Package of 13 games per hour and 130 points awarded to those with an account.',
-                'price' => '1250 KSH',
-            ],
-        ];
-    
-        return view('tickets.buytickets', compact('tickets'));
-    }
+{
+    // Example code
+    $tickets = Ticket::all();
+    return view('tickets.buytickets', compact('tickets'));
+}
+
 
     /**
      * Display a listing of the tickets in the admin panel.
@@ -51,7 +27,8 @@ class TicketController extends Controller
      */
     public function index()
     {
-        $tickets = Ticket::all();
+        $tickets = Ticket::paginate(10); // Paginate for better UI/UX
+
         return view('tickets.index', compact('tickets'));
     }
 
@@ -135,6 +112,7 @@ class TicketController extends Controller
         ]);
 
         return redirect()->route('tickets.index')->with('success', 'Ticket updated successfully.');
+
     }
 
     /**

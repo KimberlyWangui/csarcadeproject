@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\TicketCartController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\TicketController;
@@ -28,7 +28,9 @@ require __DIR__.'/auth.php';
 
 Route::get('/buy-tickets', [TicketController::class, 'buyTickets'])->name('buy.tickets');
 
+
 Route::get('/tickets', [TicketController::class, 'index'])->name('tickets.index');
+
 Route::get('/tickets/create', [TicketController::class, 'create'])->name('tickets.create');
 Route::post('/tickets', [TicketController::class, 'store'])->name('tickets.store');
 Route::get('/tickets/{ticket}', [TicketController::class, 'show'])->name('tickets.show');
@@ -88,3 +90,10 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
    Route::delete('admin/game-delete/{game_id}', [GameSectionController::class, 'delete']);
 
 });
+Route::get('/tickets', [TicketCartController::class, 'showTickets'])->name('tickets.list');
+
+Route::get('/cart', [TicketCartController::class, 'showCartTable'])->name('cart.show');
+Route::post('/cart/add/{id}', [TicketCartController::class, 'addToCart'])->name('cart.add');
+Route::post('/cart/remove', [TicketCartController::class, 'removeCartItem'])->name('cart.remove');
+Route::post('/cart/clear', [TicketCartController::class, 'clearCart'])->name('cart.clear');
+Route::post('/cart/update', [TicketCartController::class, 'updateQuantity'])->name('cart.update');

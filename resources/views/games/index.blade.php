@@ -1,4 +1,4 @@
-<!-- resources/views/games/index.blade.php -->
+
 @extends('layouts.navtwo')
 
 @section('content')

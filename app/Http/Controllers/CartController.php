@@ -32,27 +32,35 @@ class CartController extends Controller
     {
         $user = Auth::user();
         $game = Game::find($id);
-    
+        
         if (!$game) {
-            return response()->json(['message' => 'Game not found'], 404);
+            return response()->json(['message' => 'Game not found', 'status' => 'error'], 404);
         }
-    
+        
         $cart = Cart::where('userid', $user->userid)->where('game_id', $id)->first();
-    
+        
         if ($cart) {
             $cart->quantity += 1;
             $cart->save();
+            return response()->json([
+                'message' => 'Game is already in your cart. Quantity increased!',
+                'status' => 'info',
+                'quantity' => $cart->quantity
+            ]);
         } else {
             Cart::create([
                 'userid' => $user->userid,
                 'game_id' => $game->game_id,
                 'game_name' => $game->name,
                 'video_path' => $game->video_path,
-                'quantity' => 1,
+                'quantity' => 0,
+            ]);
+            return response()->json([
+                'message' => 'Game added to cart successfully!',
+                'status' => 'success',
+                'quantity' => 0
             ]);
         }
-    
-        return response()->json(['message' => 'Game added to cart successfully!']);
     }
 
     /**
