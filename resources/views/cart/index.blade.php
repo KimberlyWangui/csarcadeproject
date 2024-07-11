@@ -1,15 +1,15 @@
 @extends('layouts.navtwo')
 
-@section('title', 'Your Cart')
+@section('title', 'Your Game Cart')
 
 @section('content')
 <div class="container">
-    <h1>Your Cart</h1>
+    <h1>Your Game Cart</h1>
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
-    @if($cartItems->isEmpty())
-        <p>Your cart is empty.</p>
+    @if(empty(session('game_cart')))
+        <p>Your game cart is empty.</p>
     @else
         <table class="table">
             <thead>
@@ -20,14 +20,14 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($cartItems as $item)
+                @foreach(session('game_cart') as $id => $details)
                     <tr>
-                        <td>{{ $item->game_name }}</td>
-                        <td>{{ $item->quantity }}</td>
+                        <td>{{ $details['name'] }}</td>
+                        <td>{{ $details['quantity'] }}</td>
                         <td>
-                            <form action="{{ route('cart.remove') }}" method="POST">
+                            <form action="{{ route('game.cart.remove') }}" method="POST">
                                 @csrf
-                                <input type="hidden" name="id" value="{{ $item->game_id }}">
+                                <input type="hidden" name="id" value="{{ $id }}">
                                 <button type="submit" class="btn btn-danger">Remove</button>
                             </form>
                         </td>
@@ -35,11 +35,11 @@
                 @endforeach
             </tbody>
         </table>
+        <form action="{{ route('game.cart.clear') }}" method="POST">
+            @csrf
+            <button type="submit" class="btn btn-warning">Clear Game Cart</button>
+        </form>
     @endif
-    <form action="{{ route('cart.clear') }}" method="POST">
-        @csrf
-        <button type="submit" class="btn btn-warning">Clear Cart</button>
-    </form>
 </div>
 
 <div class="cart-actions">

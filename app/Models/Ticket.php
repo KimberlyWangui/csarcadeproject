@@ -23,8 +23,5 @@ class Ticket extends Model
     /**
      * The games that belong to the ticket.
      */
-    public function games()
-    {
-        return $this->belongsToMany(Game::class, 'game_ticket', 'ticket_id', 'game_id');
-    }
+    
 }

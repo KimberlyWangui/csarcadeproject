@@ -153,6 +153,6 @@ document.addEventListener('DOMContentLoaded', function() {
       });
   }
 
- 
+  // Checkout form submission
  
 });

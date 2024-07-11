@@ -13,8 +13,5 @@ class Game extends Model
     protected $fillable = ['name', 'video_path', 'description'];
 
 
-    public function tickets()
-    {
-        return $this->belongsToMany(Ticket::class, 'game_ticket', 'game_id', 'ticket_id');
-    }
+  
 }

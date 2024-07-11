@@ -21,7 +21,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::post('/cart/add/{id}', [CartController::class, 'addToCart'])->name('cart.add');
+    
 });
 
 require __DIR__.'/auth.php';
@@ -29,7 +29,6 @@ require __DIR__.'/auth.php';
 Route::get('/buy-tickets', [TicketController::class, 'buyTickets'])->name('buy.tickets');
 
 
-Route::get('/tickets', [TicketController::class, 'index'])->name('tickets.index');
 
 Route::get('/tickets/create', [TicketController::class, 'create'])->name('tickets.create');
 Route::post('/tickets', [TicketController::class, 'store'])->name('tickets.store');
@@ -50,11 +49,13 @@ Route::delete('/games/{game}', [GameController::class, 'destroy'])->name('games.
 Route::get('/dispgames', [GameController::class, 'dispGames'])->name('games.dispGames');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/cart', [CartController::class, 'showCartTable'])->name('cart.index');
-    Route::post('/cart/add/{id}', [CartController::class, 'addToCart'])->name('cart.add');
-    Route::post('/cart/remove', [CartController::class, 'removeCartItem'])->name('cart.remove');
-    Route::post('/cart/clear', [CartController::class, 'clearCart'])->name('cart.clear');
+    Route::get('/game-cart', [CartController::class, 'showGameCartTable'])->name('game.cart.show');
+    Route::post('/game-cart/add/{id}', [CartController::class, 'addGameToCart'])->name('game.cart.add');
+    Route::post('/game-cart/remove', [CartController::class, 'removeGameCartItem'])->name('game.cart.remove');
+    Route::post('/game-cart/clear', [CartController::class, 'clearGameCart'])->name('game.cart.clear');
+    Route::get('/games-for-cart', [CartController::class, 'showGamesForCart'])->name('games.for.cart');
 });
+
 
 // Route for the admin page
 Route::group(['middleware' => ['auth', 'admin']], function () {
@@ -91,9 +92,9 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
 
 });
 Route::get('/tickets', [TicketCartController::class, 'showTickets'])->name('tickets.list');
-
 Route::get('/cart', [TicketCartController::class, 'showCartTable'])->name('cart.show');
 Route::post('/cart/add/{id}', [TicketCartController::class, 'addToCart'])->name('cart.add');
 Route::post('/cart/remove', [TicketCartController::class, 'removeCartItem'])->name('cart.remove');
 Route::post('/cart/clear', [TicketCartController::class, 'clearCart'])->name('cart.clear');
 Route::post('/cart/update', [TicketCartController::class, 'updateQuantity'])->name('cart.update');
+

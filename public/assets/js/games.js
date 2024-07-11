@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
             e.preventDefault();
             const gameId = this.getAttribute('data-game-id');
             
-            fetch(`/cart/add/${gameId}`, { // Corrected template literal syntax
+            fetch(`/game-cart/add/${gameId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -61,23 +61,24 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .then(response => response.json())
             .then(data => {
-                alert(data.message);
+                alert(data.message); // Show success or error message from backend
             })
             .catch(error => {
                 console.error('Error:', error);
                 alert('Error adding game to cart');
             });
         });
+
     });
 
     // Slide navigation
     nextButton.onclick = function () {
         let lists = document.querySelectorAll('.itemz');
         slide.appendChild(lists[0]);
-    }
+    };
 
     prevButton.onclick = function () {
         let lists = document.querySelectorAll('.itemz');
         slide.prepend(lists[lists.length - 1]);
-    }
+    };
 });

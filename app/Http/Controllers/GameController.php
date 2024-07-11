@@ -104,35 +104,35 @@ class GameController extends Controller
         return view('games.dispgames', compact('games'));
     }
 
-    public function addToCart(Game $game)
+    public function addGameToCart(Game $game)
     {
-        $cart = Session::get('cart', []);
-    
-        if (isset($cart[$game->game_id])) {
-            $cart[$game->game_id]['quantity']++;
+        $gameCart = Session::get('game_cart', []);
+        
+        if (isset($gameCart[$game->game_id])) {
+            $gameCart[$game->game_id]['quantity']++;
         } else {
-            $cart[$game->game_id] = [
+            $gameCart[$game->game_id] = [
                 'id' => $game->game_id,
                 'name' => $game->name,
                 'video_path' => $game->video_path,
                 'quantity' => 1,
             ];
         }
-    
-        Session::put('cart', $cart);
-    
+        
+        Session::put('game_cart', $gameCart);
+        
         return response()->json([
             'success' => true,
             'message' => 'Game added to cart successfully',
-            'cart' => $cart
+            'game_cart' => $gameCart
         ]);
     }
     
-    public function getCart()
+    public function getGameCart()
     {
-        $cart = Session::get('cart', []);
+        $gameCart = Session::get('game_cart', []);
         return response()->json([
             'success' => true,
-            'cart' => $cart
+            'game_cart' => $gameCart
         ]);
     }}

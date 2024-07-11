@@ -33,7 +33,7 @@
 
 <div class="proceed-to-tickets">
     <a href="{{ route('buy.tickets') }}" class="btn-proceed" id="proceed-to-tickets">Proceed to Tickets</a>
-    <a href="{{ route('cart.index') }}" class="btn-view-cart">View Cart</a>
+    <a href="{{ route('game.cart.show') }}" class="btn-view-cart">View Cart</a>
 </div>
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
