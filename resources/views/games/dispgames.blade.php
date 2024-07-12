@@ -36,6 +36,8 @@
     <a href="{{ route('game.cart.show') }}" class="btn-view-cart">View Cart</a>
 </div>
 
+<div class="row mt-3"></div>
+
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <script src="{{ asset('/assets/js/games.js') }}"></script>
 @endsection

@@ -37,9 +37,10 @@
 }
 
 .btn {
+    
     padding: 5px 10px;
     border: none;
-    border-radius: 3px;
+    border-radius: 10px;
     cursor: pointer;
 }
 
@@ -53,12 +54,15 @@
     color: white;
 }
 
+
 .btn-proceed, .btn-continue-shopping {
     display: inline-block;
     padding: 10px 20px;
     margin-top: 20px;
     text-decoration: none;
     color: white;
+    align-items: center;
+    justify-content: center;
 }
 
 .btn-proceed {

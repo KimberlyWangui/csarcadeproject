@@ -25,57 +25,64 @@
               <div class="nav-inner"></div>
   
       <!-- Navbar code -->
-      <nav class="navbar navbar-expand-lg" style="background-color: #EC3B83 ;">
-      <a class="navbar-brand" href="index.html">
-      <img src="{{ asset('assets/images/logo.png') }}" alt="Logo" />
-  
-    <!-- Button responsiveness on mobile -->
-    
-    <button
-    class="navbar-toggler mobile-menu-btn"
-    type="button"
-    data-bs-toggle="collapse"
-    data-bs-target="#navbarSupportedContent"
-    aria-controls="navbarSupportedContent"
-    aria-expanded="false"
-    aria-label="Toggle navigation">
-  
-    <span class="toggler-icon"></span>
-    <span class="toggler-icon"></span>
-    <span class="toggler-icon"></span>
-  </button>
-  
-  
-  <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
-  
-  <ul id="nav" class="navbar-nav ml-auto">
-                      <li class="nav-item">
-                        <a class="page-scroll" href="index.php">Home</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="page-scroll" href="about.php">About</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="page-scroll" href="faq.php">FAQs</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="page-scroll" href="contacts.php">Contact Us</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="page-scroll" href="/register">Sign Up</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="page-scroll" href="/login">Sign In</a>
-                      </li>
-                      
-                      
-                    </ul>
-                  </div>
-  
-                  <!-- navbar collapse -->
-  
-                  
-  
+      <nav class="navbar navbar-expand-lg" style="background-color: #EC3B83;">
+        <div class="container">
+         
+          
+          <a class="navbar-brand" href="index.html">
+            <img src="{{ asset('assets/images/logo.png') }}" alt="Logo" />
+          </a>
+        
+      
+          <button
+            class="navbar-toggler mobile-menu-btn"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="toggler-icon"></span>
+            <span class="toggler-icon"></span>
+            <span class="toggler-icon"></span>
+          </button>
+      
+          <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
+            <ul id="nav" class="navbar-nav ml-auto">
+              <li class="nav-item">
+                <a class="page-scroll" href="index.php">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="page-scroll" href="about.php">About</a>
+              </li>
+              <li class="nav-item">
+                <a class="page-scroll" href="faq.php">FAQs</a>
+              </li>
+              <li class="nav-item">
+                <a class="page-scroll" href="contacts.php">Contact Us</a>
+              </li>
+              <?php if(!auth()->check()): ?>
+                <li class="nav-item">
+                  <a class="page-scroll" href="/register">Sign Up</a>
+                </li>
+                <li class="nav-item">
+                  <a class="page-scroll" href="/login">Sign In</a>
+                </li>
+              <?php else: ?>
+                <li class="nav-item">
+                  <a class="page-scroll" href="<?php echo route('logout'); ?>"
+                     onclick="event.preventDefault();
+                               document.getElementById('logout-form').submit();">
+                      Sign Out
+                  </a>
+                </li>
+                <form id="logout-form" action="<?php echo route('logout'); ?>" method="POST" style="display: none;">
+                  <?php echo csrf_field(); ?>
+                </form>
+              <?php endif; ?>
+            </ul>
+          </div>
+        </div>
       </nav>
        <!-- End of Navbar -->
     

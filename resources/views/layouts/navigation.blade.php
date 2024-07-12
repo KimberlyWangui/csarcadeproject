@@ -2,10 +2,17 @@
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
-            <div class="flex">
+            <div class="flex items-center">
+                <!-- User Name Link -->
+                <div class="flex-shrink-0 mr-4">
+                    <a href="{{ route('dashboard') }}" class="text-sm font-medium text-gray-500 hover:text-gray-700">
+                        {{ Auth::user()->name }}
+                    </a>
+                </div>
+
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                <img class="block h-10 w-auto" src="{{ asset('assets/images/logo.png') }}" alt="Logo" />
+                    <img class="block h-10 w-auto" src="{{ asset('assets/images/logo.png') }}" alt="Logo" />
                     <a href="{{ route('dashboard') }}">
                     </a>
                 </div>
@@ -15,15 +22,18 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('games.dispGames')" :active="request()->routeIs('games.dispGames')">
+                        {{ __('View Games') }}
+                    </x-nav-link>
                 </div>
             </div>
 
             <!-- Settings Dropdown -->
-            <div class="hidden sm:flex sm:items-center sm:ms-6">
+            <div class="hidden sm:flex sm:items-center">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                            <div>{{ Auth::user()->name }}</div>
+                            <div>{{ __('Settings') }}</div>
 
                             <div class="ms-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -38,9 +48,9 @@
                             {{ __('Manage Profile') }}
                         </x-dropdown-link>
                         
-                            <x-dropdown-link :href="route('cart.show')">
-                                {{ __('Add to cart') }}
-                            </x-dropdown-link>
+                        <x-dropdown-link :href="route('cart.show')">
+                            {{ __('View Your Cart') }}
+                        </x-dropdown-link>
 
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
@@ -74,6 +84,9 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('games.dispGames')" :active="request()->routeIs('games.dispGames')">
+                {{ __('Games') }}
+            </x-responsive-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->
@@ -86,6 +99,10 @@
             <div class="mt-3 space-y-1">
                 <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Manage Profile') }}
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('cart.show')">
+                    {{ __('View Your Cart') }}
                 </x-responsive-nav-link>
 
                 <!-- Authentication -->

@@ -149,32 +149,40 @@
 .buttons5 button {
     width: 50px;
     height: 50px;
-    border-radius: 50%;
+    border-radius: 25px;
     border: none;
     transition: 0.5s;
+    background-color: #a4366077;
 }
 
 .buttons5 button:hover {
-    background-color: #60b0d2;
+    background-color: #E0115F;
 }
 
 .see-more, .go-back {
     display: inline-block;
     margin-top: 10px;
+    background-color: #5153a4;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
 }
 
 .add-to-cart {
     display: inline-block;
     margin-top: 10px;
-    background-color: #4CAF50;
+    background-color: #E0115F;
     color: white;
     padding: 10px 20px;
     border: none;
     cursor: pointer;
+    border-radius: 10px;
 }
 
 .add-to-cart:hover {
-    background-color: #45a049;
+    background-color: #00CED1;
 }
 
 .proceed-to-tickets {
@@ -185,26 +193,32 @@
 .btn-proceed {
     display: inline-block;
     margin-top: 10px;
-    background-color: #4CAF50;
+    background-color: #E0115F;
     color: white;
     padding: 10px 20px;
     border: none;
     transition: background-color 0.3s;
+    border-radius: 10px;
+    
 }
 
 .btn-proceed:hover {
-    background-color: #45a049;
+    background-color: #00CED1;
+    text-decoration: none; 
 }
 
 .btn-view-cart{
     display: inline-block;
     margin-top: 10px;
-    background-color: #4CAF50;
+    background-color: #E0115F;
     color: white;
     padding: 10px 20px;
     border: none;
     transition: background-color 0.3s;
+    border-radius: 10px;
+    
 }
 .btn-view-cart:hover {
-    background-color: #45a049;
+    background-color: #00CED1;
+    text-decoration: none; 
 }
