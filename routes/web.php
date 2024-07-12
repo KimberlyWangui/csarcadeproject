@@ -92,11 +92,15 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
 
 });
 Route::get('/tickets', [TicketCartController::class, 'showTickets'])->name('tickets.list');
-Route::get('/cart', [TicketCartController::class, 'showCartTable'])->name('cart.show');
-Route::post('/cart/add/{id}', [TicketCartController::class, 'addToCart'])->name('cart.add');
-Route::post('/cart/remove', [TicketCartController::class, 'removeCartItem'])->name('cart.remove');
-Route::post('/cart/clear', [TicketCartController::class, 'clearCart'])->name('cart.clear');
-Route::post('/cart/update', [TicketCartController::class, 'updateQuantity'])->name('cart.update');
-Route::get('/checkout', [TicketCartController::class, 'showCheckout'])->name('cart.checkout');
-Route::post('/process-payment', [TicketCartController::class, 'processPayment'])->name('cart.process-payment');
+
+Route::prefix('cart')->group(function () {
+    Route::get('/', [TicketCartController::class, 'showCartTable'])->name('cart.show');
+    Route::post('/add/{id}', [TicketCartController::class, 'addToCart'])->name('cart.add');
+    Route::post('/remove', [TicketCartController::class, 'removeCartItem'])->name('cart.remove');
+    Route::post('/clear', [TicketCartController::class, 'clearCart'])->name('cart.clear');
+    Route::post('/update', [TicketCartController::class, 'updateQuantity'])->name('cart.update');
+    Route::get('/checkout', [TicketCartController::class, 'showCheckout'])->name('cart.checkout');
+    Route::post('/process-payment', [TicketCartController::class, 'processPayment'])->name('cart.process-payment');
+    Route::get('/show-payment', [TicketCartController::class, 'showPayment'])->name('cart.show-payment');
+});
 

@@ -8,7 +8,7 @@
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
-    @if(empty($cartItems))
+    @if($cartItems->isEmpty())
         <p>Your cart is empty.</p>
     @else
         <table class="table">
@@ -22,16 +22,18 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($cartItems as $id => $item)
+                @foreach($cartItems as $item)
                     <tr>
                         <td>{{ $item['ticket_type'] }}</td>
-                        <td>{{ $item['quantity'] }}</td> <!-- Display the quantity directly -->
+                        <td id="quantity_{{ $item['id'] }}">{{ $item['quantity'] }}</td>
                         <td>{{ $item['price'] }} KSH</td>
-                        <td class="item-total">{{ $item['total_price'] }} KSH</td>
+                        <td class="item-total">{{ $item['total_amount'] }} KSH</td>
                         <td>
                             <form action="{{ route('cart.remove') }}" method="POST">
                                 @csrf
-                                <input type="hidden" name="id" value="{{ $id }}">
+                                @if(isset($item['id']))
+                                    <input type="hidden" name="id" value="{{ $item['id'] }}">
+                                @endif
                                 <button type="submit" class="btn btn-danger">Remove</button>
                             </form>
                         </td>
@@ -50,30 +52,4 @@
     <a href="{{ route('cart.checkout') }}" class="btn btn-proceed">Proceed to Checkout</a>
     <a href="{{ route('tickets.list') }}" class="btn btn-continue-shopping">Continue Shopping</a>
 </div>
-@endsection
-
-@section('scripts')
-<script>
-$(document).ready(function() {
-    $('.quantity-input').change(function() {
-        var id = $(this).data('id');
-        var quantity = $(this).val();
-        
-        $.ajax({
-            url: '{{ route("cart.update") }}',
-            method: 'POST',
-            data: {
-                _token: '{{ csrf_token() }}',
-                id: id,
-                quantity: quantity
-            },
-            success: function(response) {
-                if(response.success) {
-                    location.reload();
-                }
-            }
-        });
-    });
-});
-</script>
 @endsection

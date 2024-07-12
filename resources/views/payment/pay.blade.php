@@ -32,12 +32,10 @@
                     </div>
                     <div class="form-group mt-4">
                         <label for="amount">Amount (KSH)</label>
-                        <input type="text" class="form-control" id="amount" name="amount" value="{{ array_sum(array_column($cartItems, 'total_price')) }}" readonly>
+                        <input type="text" class="form-control" id="amount" name="amount" value="{{ $totalAmount }}" readonly>
                     </div>
+                    <button type="submit" class="btn btn-primary btn-block mt-3">Pay Now</button>
                 </form>
-            </div>
-            <div>
-                <button type="submit" class="btn btn-primary btn-block mt-3">Pay Now</button>
             </div>
         </div>
 
@@ -46,20 +44,19 @@
             <div>
                 <h3>Order Information</h3>
                 <div class="mt-3">
-                    @foreach($cartItems as $id => $details)
+                    @foreach($cartItems as $item)
                         <div class="mb-2">
-                            <strong>{{ $details['ticket_type'] }}</strong><br>
-                            {{ $details['quantity'] }} x KSH{{ $details['price'] }} = KSH{{ $details['quantity'] * $details['price'] }}
+                            <strong>{{ $item['ticket_type'] }}</strong><br>
+                            {{ $item['quantity'] }} x KSH{{ $item['price'] }} = KSH{{ $item['total_amount'] }}
                         </div>
                     @endforeach
                 </div>
             </div>
             <div class="mt-3 pt-2 border-top">
-                <strong>Total: KSH{{ array_sum(array_column($cartItems, 'total_price')) }}</strong>
+                <strong>Total: KSH{{ $totalAmount }}</strong>
             </div>
         </div>
     </div>
-    <div class="row mt-5"></div>
 </div>
 
 <style>
@@ -67,7 +64,7 @@
         border-right: 1px solid #dee2e6;
     }
     .payment-form {
-        min-height: 400px; /* Adjust this value to make the form longer */
+        min-height: 400px; /* Adjust this value to make the form longer if needed */
     }
 </style>
 @endsection
