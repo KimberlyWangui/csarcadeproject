@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Ticket;
 use App\Models\CartItem;
 use Illuminate\Support\Facades\Auth;
-
+use App\Services\MpesaService;
+use Illuminate\Support\Facades\Log;
 class TicketCartController extends Controller
 {
     public function addToCart($id)
@@ -21,7 +22,7 @@ class TicketCartController extends Controller
                     'ticket_type' => $ticket->ticket_type,
                     'quantity' => \DB::raw('quantity + 1'),
                     'ticket_price' => $ticket->price,
-                    'total_amount' => \DB::raw('(quantity + 1) * ' . $ticket->price)
+                    'total_amount' => \DB::raw('quantity * ' . $ticket->price)
                 ]
             );
         } else {
@@ -150,16 +151,53 @@ class TicketCartController extends Controller
         $totalAmount = $this->calculateTotalAmount($cartItems);
         return view('payment.pay', compact('cartItems', 'totalAmount'));
     }
-
+  
     public function processPayment(Request $request)
-    {
-        // Handle payment processing logic here
-        // After successful payment, clear the cart and redirect to a confirmation page
-        if (Auth::check()) {
-            CartItem::where('user_id', Auth::id())->delete();
-        } else {
-            session()->forget('cart');
-        }
-        return redirect()->route('payment.confirmation')->with('success', 'Payment processed successfully!');
+{
+    $request->validate([
+        'phone_number' => 'required|regex:/^254\d{9}$/',
+    ]);
+
+    $cartItems = $this->getCartItems();
+    $totalAmount = $this->calculateTotalAmount($cartItems);
+
+    $mpesaService = new MpesaService();
+    $response = $mpesaService->stkPush(
+        $request->phone_number,
+        $totalAmount,
+        'TICKET' . time()
+    );
+
+    if (isset($response['ResponseCode']) && $response['ResponseCode'] == "0") {
+        session(['mpesa_checkout_request_id' => $response['CheckoutRequestID']]);
+        return redirect()->route('payment.waiting')->with('success', 'Please complete the payment on your phone.');
+    } else {
+        Log::error('M-Pesa Payment Initiation Failed', ['response' => $response]);
+        return back()->with('error', 'Failed to initiate payment. Please try again. Error: ' . ($response['errorMessage'] ?? 'Unknown error'));
     }
 }
+       
+    
+        public function waitForPayment()
+        {
+            return view('payment.waiting');
+        }
+    
+        public function confirmPayment(Request $request)
+        {
+            // This method will be called by the M-Pesa API
+            // Implement the logic to confirm the payment and update your database
+        }
+    
+        public function checkPaymentStatus()
+        {
+            // TODO: Implement logic to check payment status
+            // This could involve checking your database or making an API call to M-Pesa
+            
+            // For now, we'll just return a random status
+            $statuses = ['pending', 'completed', 'failed'];
+            $status = $statuses[array_rand($statuses)];
+            
+            return response()->json(['status' => $status]);
+        }
+    }

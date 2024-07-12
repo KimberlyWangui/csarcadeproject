@@ -24,11 +24,21 @@
                 <div class="text-center mb-4">
                     <img src="{{ asset('assets/images/mpesa.png') }}" alt="M-Pesa Icon" style="width: 100px;">
                 </div>
+                @if(session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+                @endif
                 <form action="{{ route('cart.process-payment') }}" method="POST">
                     @csrf
                     <div class="form-group">
-                        <label for="phone_number">Phone Number</label>
-                        <input type="tel" class="form-control" id="phone_number" name="phone_number" required>
+                        <label for="phone_number">Phone Number (254XXXXXXXXX)</label>
+                        <input type="tel" class="form-control @error('phone_number') is-invalid @enderror" id="phone_number" name="phone_number" required pattern="254\d{9}" value="{{ old('phone_number') }}">
+                        @error('phone_number')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                     </div>
                     <div class="form-group mt-4">
                         <label for="amount">Amount (KSH)</label>
@@ -38,6 +48,7 @@
                 </form>
             </div>
         </div>
+        
 
         <!-- Right Section: Order Information -->
         <div class="col-md-4 d-flex flex-column justify-content-between">
@@ -57,6 +68,7 @@
             </div>
         </div>
     </div>
+    <div class="row mt-3"></div>
 </div>
 
 <style>

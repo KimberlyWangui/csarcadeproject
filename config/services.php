@@ -17,6 +17,9 @@ return [
     'postmark' => [
         'token' => env('POSTMARK_TOKEN'),
     ],
+    'mpesa' => [
+    'callback_url' => env('MPESA_CALLBACK_URL'),
+],
 
     'ses' => [
         'key' => env('AWS_ACCESS_KEY_ID'),

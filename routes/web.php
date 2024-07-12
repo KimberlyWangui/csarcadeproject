@@ -100,7 +100,13 @@ Route::prefix('cart')->group(function () {
     Route::post('/clear', [TicketCartController::class, 'clearCart'])->name('cart.clear');
     Route::post('/update', [TicketCartController::class, 'updateQuantity'])->name('cart.update');
     Route::get('/checkout', [TicketCartController::class, 'showCheckout'])->name('cart.checkout');
+
     Route::post('/process-payment', [TicketCartController::class, 'processPayment'])->name('cart.process-payment');
-    Route::get('/show-payment', [TicketCartController::class, 'showPayment'])->name('cart.show-payment');
+
+Route::get('/payment-waiting', [TicketCartController::class, 'waitForPayment'])->name('payment.waiting');
+Route::post('/confirm-payment', [TicketCartController::class, 'confirmPayment'])->name('payment.confirm');
+Route::get('/check-payment-status', [TicketCartController::class, 'checkPaymentStatus'])->name('payment.check-status');
+
 });
+
 
