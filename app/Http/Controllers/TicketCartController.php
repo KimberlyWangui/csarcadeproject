@@ -21,23 +21,22 @@ class TicketCartController extends Controller
                     'ticket_type' => $ticket->ticket_type,
                     'quantity' => \DB::raw('quantity + 1'),
                     'ticket_price' => $ticket->price,
-                    'total_amount' => \DB::raw('quantity * ' . $ticket->price)
+                    'total_amount' => \DB::raw('(quantity + 1) * ' . $ticket->price)
                 ]
             );
         } else {
             $cart = session()->get('cart', []);
             if (isset($cart[$id])) {
                 $cart[$id]['quantity']++;
-                $cart[$id]['total_amount'] = $cart[$id]['quantity'] * $cart[$id]['price'];
-                $cart[$id]['ticket_price'] = $ticket->price;
+                $cart[$id]['total_amount'] = $cart[$id]['quantity'] * $ticket->price;
             } else {
                 $cart[$id] = [
+                    "id" => $id,
                     "ticket_type" => $ticket->ticket_type,
                     "quantity" => 1,
                     "price" => $ticket->price,
                     "description" => $ticket->description,
-                    "total_amount" => $ticket->price,
-                    "ticket_price" => $ticket->price
+                    "total_amount" => $ticket->price
                 ];
             }
             session()->put('cart', $cart);
@@ -52,7 +51,7 @@ class TicketCartController extends Controller
     public function showCartTable()
     {
         $cartItems = $this->getCartItems();
-        $totalAmount = $cartItems->sum('total_amount'); // Calculate total amount
+        $totalAmount = $this->calculateTotalAmount($cartItems);
         return view('cart.tickets', compact('cartItems', 'totalAmount'));
     }
 
@@ -104,7 +103,7 @@ class TicketCartController extends Controller
                 $cart = session()->get('cart', []);
                 if (isset($cart[$id])) {
                     $cart[$id]['quantity'] = $quantity;
-                    $cart[$id]['total_amount'] = $quantity * $cart[$id]['ticket_price'];
+                    $cart[$id]['total_amount'] = $quantity * $cart[$id]['price'];
                     session()->put('cart', $cart);
                     return response()->json([
                         'success' => true,
@@ -134,6 +133,11 @@ class TicketCartController extends Controller
         }
     }
 
+    private function calculateTotalAmount($cartItems)
+    {
+        return $cartItems->sum('total_amount');
+    }
+
     public function showTickets()
     {
         $tickets = Ticket::all();
@@ -143,10 +147,9 @@ class TicketCartController extends Controller
     public function showCheckout()
     {
         $cartItems = $this->getCartItems();
-        $totalAmount = $cartItems->sum('total_amount'); // Calculate total amount
+        $totalAmount = $this->calculateTotalAmount($cartItems);
         return view('payment.pay', compact('cartItems', 'totalAmount'));
     }
-    
 
     public function processPayment(Request $request)
     {

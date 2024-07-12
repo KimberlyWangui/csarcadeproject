@@ -25,15 +25,13 @@
                 @foreach($cartItems as $item)
                     <tr>
                         <td>{{ $item['ticket_type'] }}</td>
-                        <td id="quantity_{{ $item['id'] }}">{{ $item['quantity'] }}</td>
+                        <td id="quantity{{ $item['id'] }}">{{ $item['quantity'] }}</td>
                         <td>{{ $item['price'] }} KSH</td>
                         <td class="item-total">{{ $item['total_amount'] }} KSH</td>
                         <td>
                             <form action="{{ route('cart.remove') }}" method="POST">
                                 @csrf
-                                @if(isset($item['id']))
-                                    <input type="hidden" name="id" value="{{ $item['id'] }}">
-                                @endif
+                                <input type="hidden" name="id" value="{{ $item['id'] }}">
                                 <button type="submit" class="btn btn-danger">Remove</button>
                             </form>
                         </td>
