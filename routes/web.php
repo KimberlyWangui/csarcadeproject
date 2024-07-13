@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Admin\GameSectionController;
 use App\Http\Controllers\Admin\TicketSectionController;
+use App\Http\Controllers\Admin\PromotionsSectionController;
 
 Route::get('/', function () {
     return view('home');
@@ -91,7 +92,12 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
    Route::get('admin/edit-tickets/{id}', [TicketSectionController::class, 'edit']);
    Route::put('admin/ticket-update/{id}', [TicketSectionController::class, 'update']);
    Route::delete('admin/ticket-delete/{id}', [TicketSectionController::class, 'delete']);
+
+   Route::get('admin/promotion', [PromotionsSectionController::class, 'index']);
+   Route::post('admin/save-promotion', [PromotionsSectionController::class, 'store']);
+   Route::get('admin/edit-promotion/{id}', [PromotionsSectionController::class, 'edit']);
   
+   
 });
 
 
