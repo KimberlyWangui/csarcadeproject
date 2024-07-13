@@ -8,6 +8,7 @@ use App\Http\Controllers\CartController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Admin\GameSectionController;
+use App\Http\Controllers\Admin\TicketSectionController;
 
 Route::get('/', function () {
     return view('home');
@@ -67,21 +68,6 @@ Route::middleware('auth')->group(function () {
 });
 
 
-// Route for the admin page
-Route::group(['middleware' => ['auth', 'admin']], function () {
-    Route::get('admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
-    Route::get('admin/role-register', [DashboardController::class, 'registered']);
-    Route::get('admin/role-edit/{userid}', [DashboardController::class, 'registeredit'])->name('admin.register-edit');
-    Route::put('admin/role-register-update/{userid}', [DashboardController::class, 'registerupdate']);
-    Route::delete('admin/role-delete/{userid}', [DashboardController::class, 'registerdelete']);
-
-    Route::get('admin/games', [GameSectionController::class, 'index']);
-    Route::post('admin/save-games', [GameSectionController::class, 'store']);
-    Route::get('admin/edit-games/{game_id}', [GameSectionController::class, 'edit']);
-    Route::put('admin/game-edit/{game_id}', [GameSectionController::class, 'update']);
-    Route::delete('admin/game-delete/{game_id}', [GameSectionController::class, 'delete']);
-});
-
 //Route for the admin page
 //Route::get('admin/dashboard', [AdminController::class, 'index'])->middleware(['auth','admin'])->name('admin.dashboard');
 
@@ -100,7 +86,15 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
    Route::put('admin/game-edit/{game_id}', [GameSectionController::class, 'update']);
    Route::delete('admin/game-delete/{game_id}', [GameSectionController::class, 'delete']);
 
+   Route::get('admin/tickets', [TicketSectionController::class, 'index']);
+   Route::post('admin/save-tickets', [TicketSectionController::class, 'store']);
+   Route::get('admin/edit-tickets/{id}', [TicketSectionController::class, 'edit']);
+   Route::put('admin/ticket-update/{id}', [TicketSectionController::class, 'update']);
+   Route::delete('admin/ticket-delete/{id}', [TicketSectionController::class, 'delete']);
+  
 });
+
+
 Route::get('/tickets', [TicketCartController::class, 'showTickets'])->name('tickets.list');
 
 Route::prefix('cart')->group(function () {
