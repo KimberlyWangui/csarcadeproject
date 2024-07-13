@@ -2,11 +2,24 @@
 
 @section('title', 'Buy tickets')
 
+
 @section('content')
-    <div class="container mt-5">
+
+
+<div class="row mt-3"></div>
+<div class="row mb-4">
+    <div class="col-md-12">
+        <a href="{{ route('games.dispGames') }}" class="btn btn-secondary float-left">
+            <i class="lni lni-shift-left"></i> View Games
+        </a>
+    </div>
+</div>
+
+    <div class="container mt-5"> 
+       
 
       
-        <h2>PICK YOUR PREFERRED DATE <i class="lni lni-calendar"></i></h2>
+        <h2>PICK A DATE <i class="lni lni-calendar"></i></h2>
 <div class="date-picker">
   <input type="text" class="selected-date" readonly>
   

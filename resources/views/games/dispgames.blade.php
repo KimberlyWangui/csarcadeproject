@@ -3,6 +3,7 @@
 @section('title', 'Display Games')
 
 @section('content')
+
 <div class="container5">
     <div id="slide">
         @foreach($games as $index => $game)

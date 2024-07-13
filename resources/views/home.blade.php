@@ -36,7 +36,7 @@
 
     <!-- Navbar code -->
     <nav class="navbar navbar-expand-lg">
-    <a class="navbar-brand" href="index.html">
+    <a class="navbar-brand" href="index.php">
     <img src="{{ asset('assets/images/logo.png') }}" alt="Logo" />
 
   <!-- Button responsiveness on mobile -->
@@ -63,20 +63,34 @@
                       <a class="page-scroll" href="index.php">Home</a>
                     </li>
                     <li class="nav-item">
-                      <a class="page-scroll" href="about.php">About</a>
+                      <a class="page-scroll" href="/about">About</a>
                     </li>
                     <li class="nav-item">
-                      <a class="page-scroll" href="faq.php">FAQs</a>
+                      <a class="page-scroll" href="/FAQ">FAQs</a>
                     </li>
                     <li class="nav-item">
-                      <a class="page-scroll" href="contacts.php">Contact Us</a>
+                      <a class="page-scroll" href="/contact">Contact Us</a>
                     </li>
-                    <li class="nav-item">
-                      <a class="page-scroll" href="/register">Sign Up</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="page-scroll" href="/login">Sign In</a>
-                    </li>
+                     </li>
+                    <?php if(!auth()->check()): ?>
+                      <li class="nav-item">
+                        <a class="page-scroll" href="/register">Sign Up</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="page-scroll" href="/login">Sign In</a>
+                      </li>
+                    <?php else: ?>
+                      <li class="nav-item">
+                        <a class="page-scroll" href="<?php echo route('logout'); ?>"
+                           onclick="event.preventDefault();
+                                     document.getElementById('logout-form').submit();">
+                            Sign Out
+                        </a>
+                      </li>
+                      <form id="logout-form" action="<?php echo route('logout'); ?>" method="POST" style="display: none;">
+                        <?php echo csrf_field(); ?>
+                      </form>
+                    <?php endif; ?>
                   </ul>
                 </div>
 
@@ -295,9 +309,7 @@
 </div>
 
 <div class="container2">
- <div class="button">
-   <a href="#learnmore" class="btn3">See More</a>
- </div>
+
  </div>           
           
           
@@ -356,103 +368,87 @@
       
 
      
-<!-- Start Footer Section -->
 <footer class="footer">
-    <!-- Start Footer Top -->
-    <div class="footer-top">
-      <div class="container">
-        <div class="inner-content">
-          <div class="row">
-            <div class="col-lg-4 col-md-6 col-12">
-              <!-- Single Widget -->
-              <div class="single-footer f-about">
-                <div class="logo1">
-                  <a href="index.html">
-                    <img src="{{asset('assets/images/logo.png')}}" alt="Arcade Logo" />
-                  </a>
-                </div>
-               
-                <span class="social-title">Find Us On:</span>
-                <ul class="social">
-                  <li>
-                    <a href="#"><i class="lni lni-facebook-filled"></i></a>
-                  </li>
-                  <li>
-                    <a href="#"><i class="lni lni-twitter-filled"></i></a>
-                  </li>
-                  <li>
-                    <a href="#"><i class="lni lni-instagram-filled"></i></a>
-                  </li>
-                </ul>
+  <!-- Start Footer Top -->
+  <div class="footer-top">
+    <div class="container">
+      <div class="inner-content">
+        <div class="row">
+          <div class="col-lg-3 col-md-6 col-12">
+            <!-- Single Widget -->
+            <div class="single-footer f-about">
+              <div class="logo1">
+                <a href="index.php">
+                  <img src="{{asset('assets/images/logo.png')}}" alt="Arcade Logo" />
+                </a>
               </div>
-              <!-- End Single Widget -->
-            </div>
-            <div class="col-lg-2 col-md-6 col-12">
-              <!-- Single Widget -->
-              <div class="single-footer f-link">
-                <h3>Quick Links</h3>
-                <ul>
-                  <li><a href="#">About Us</a></li>
-                  <li><a href="#">FAQs</a></li>
-                  <li><a href="#">Contact Us</a></li>
-                  <li><a href="#">Terms and Conditions</a></li>
-                  <li><a href="#">Sign Up</a></li>
-                </ul>
-              </div>
-              <!-- End Single Widget -->
-            </div>
-            <div class="col-lg-4 col-md-6 col-12">
-              <!-- Single Widget -->
-              <div class="single-footer newsletter">
-                <h3>Subscribe to our newsletter</h3>
-                <form action="#" method="get" target="_blank" class="newsletter-form">
-                  <input name="name" placeholder="Your Name*" required type="text" />
-                  <input name="email" placeholder="Email address*" required type="email" />
-                  <div class="button">
-                    <button class="btn">Subscribe</button>
-                  </div>
-                </form>
-              </div>
-              <!-- End Single Widget -->
-            </div>
-            <div class="col-lg-2 col-md-6 col-12">
-              <h4>Book Now</h4>
-              <a href="tickets.php" class="btn4">Book Now</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!--/ End Footer Top -->
+              <span class="social-title">Find Us On:</span>
+              <ul class="social">
+                <li>
+                  <a href="https://www.facebook.com"><i class="lni lni-facebook-filled"></i></a>
+                </li>
+                
+                
+                <li>
+                  <a href="https://www.x.com"><i class="lni lni-twitter-filled"></i></a>
+                </li>
+                <li>
+                  <a href="https://www.instagram.com"><i class="lni lni-instagram-filled"></i></a>
+                </li>
+              </ul>
+              
 
-    <!-- Start Copyright Area -->
-    <div class="copyright">
-      <div class="container">
-        <div class="inner-content">
-          <div class="row">
-            <div class="col-12">
-              <p class="copyright-text">Designed and Developed by Shawntel and Kimberly.co</p>
             </div>
+            <!-- End Single Widget -->
+          </div>
+          <div class="col-lg-2 col-md-6 col-12">
+            <!-- Single Widget -->
+            <div class="single-footer f-link">
+              
+              <h3>QUICK LINKS: </h3>
+              <ul>
+                <li><a href="/about">About Us</a></li>
+                <li><a href="/FAQ">FAQs</a></li>
+                <li><a href="/contact">Contact Us</a></li>
+                <li><a href="/register">Sign Up</a></li>
+              </ul>
+            </div>
+            <!-- End Single Widget -->
+          </div>
+          
+          <div class="col-lg-3 col-md-6 col-12">
+           
+            
+            <!-- End Single Widget -->
+          </div>
+          <div class="col-lg-3 col-md-6 col-12">
+            <i class="lni lni-game"></i>
+            <h4>Book Now</h4>
+            <a href="{{ route('buy.tickets') }}" class="btn4">Book Now</a>
           </div>
         </div>
       </div>
     </div>
-    <!-- End Copyright Area -->
-  </footer>
-  <!--End Footer Section -->
+  </div>
+  <!--/ End Footer Top -->
+
+  <!-- Start Copyright Area -->
+
+  <!-- End Copyright Area -->
+</footer>
+<!--End Footer Section -->
  
 
   <!--Scroll to top -->
 
-  <a href="#" class="scroll-top btn-hover">
-      <i class="lni lni-chevron-up"></i>
-    </a>
+ 
 
 <!--JS Links-->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     
     <script src="{{ asset('assets/index.js')}}"></script>
+    
 
 </body>
 </html>

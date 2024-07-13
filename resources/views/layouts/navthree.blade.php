@@ -98,74 +98,7 @@
         @yield('content')
     </main>
 
-    <footer class="footer">
-      <!-- Start Footer Top -->
-      <div class="footer-top">
-        <div class="container">
-          <div class="inner-content">
-            <div class="row">
-              <div class="col-lg-3 col-md-6 col-12">
-                <!-- Single Widget -->
-                <div class="single-footer f-about">
-                  <div class="logo1">
-                    <a href="index.php">
-                      <img src="{{asset('assets/images/logo.png')}}" alt="Arcade Logo" />
-                    </a>
-                  </div>
-                  <span class="social-title">Find Us On:</span>
-                  <ul class="social">
-                    <li>
-                      <a href="https://www.facebook.com"><i class="lni lni-facebook-filled"></i></a>
-                    </li>
-                    
-                    
-                    <li>
-                      <a href="https://www.x.com"><i class="lni lni-twitter-filled"></i></a>
-                    </li>
-                    <li>
-                      <a href="https://www.instagram.com"><i class="lni lni-instagram-filled"></i></a>
-                    </li>
-                  </ul>
-                  
     
-                </div>
-                <!-- End Single Widget -->
-              </div>
-              <div class="col-lg-2 col-md-6 col-12">
-                <!-- Single Widget -->
-                <div class="single-footer f-link">
-                  
-                  <h3>QUICK LINKS: </h3>
-                  <ul>
-                    <li><a href="/about">About Us</a></li>
-                    <li><a href="/FAQ">FAQs</a></li>
-                    <li><a href="/contact">Contact Us</a></li>
-                    <li><a href="/register">Sign Up</a></li>
-                  </ul>
-                </div>
-                <!-- End Single Widget -->
-              </div>
-              
-              <div class="col-lg-3 col-md-6 col-12">
-               
-                
-                <!-- End Single Widget -->
-              </div>
-              <div class="col-lg-3 col-md-6 col-12">
-                <i class="lni lni-game"></i>
-                <h4>Book Now</h4>
-                <a href="{{ route('buy.tickets') }}" class="btn4">Book Now</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!--/ End Footer Top -->
-    
-      <!-- Start Copyright Area -->
-    
-      <!-- End Copyright Area -->
-    </footer>
     <script src="{{ asset('assets/js/tickets.js') }}"></script>
     <script src="{{ asset('assets/js/games.js') }}"></script>
 </body>

@@ -1,4 +1,4 @@
-@extends('layouts.navtwo')
+@extends('layouts.navthree')
 
 @section('title', 'Your Ticket Cart')
 

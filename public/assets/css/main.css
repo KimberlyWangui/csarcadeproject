@@ -351,7 +351,7 @@ body {
   }
 
   .footer {
-   background-color:   #EC3B83;
+   background-color:   #1f171a;
     color: #fff;
     padding: 10px 0;
     width: 100%;
@@ -395,6 +395,7 @@ body {
 .single-footer h3 {
     font-size: 18px;
     margin-bottom: 20px;
+    
 }
 
 .single-footer ul {
@@ -440,11 +441,8 @@ body {
     color: #fff;
 }
 
-.newsletter-form input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-}
+
+
 
 .btn4 {
     display: inline-block;
@@ -481,6 +479,15 @@ body {
     .social {
         justify-content: center;
     }
+}
+@keyframes lightUp {
+  0% { color: #fff; }
+  50% { color: #00CED1; }
+  100% { color: #fff; }
+}
+
+.social-icon-light-up {
+  animation: lightUp 1s ease-in-out;
 }
 
 .single-footer.f-link ul li a {

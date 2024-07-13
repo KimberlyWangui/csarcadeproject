@@ -37,7 +37,6 @@
 }
 
 .btn {
-    
     padding: 5px 10px;
     border: none;
     border-radius: 10px;
@@ -54,20 +53,22 @@
     color: white;
 }
 
+.cart-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
 
 .btn-proceed, .btn-continue-shopping {
     display: inline-block;
     padding: 10px 20px;
-    margin-top: 20px;
+    margin: 0 10px;
     text-decoration: none;
     color: white;
-    align-items: center;
-    justify-content: center;
 }
 
 .btn-proceed {
     background-color: #4CAF50;
-    margin-right: 10px;
 }
 
 .btn-continue-shopping {

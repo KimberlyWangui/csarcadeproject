@@ -1,4 +1,4 @@
-@extends('layouts.navtwo')
+@extends('layouts.navthree')
 
 @section('title', 'Your Game Cart')
 
@@ -46,5 +46,6 @@
     <a href="{{ route('buy.tickets') }}" class="btn btn-proceed">Proceed to Tickets</a>
     <a href="{{ route('games.dispGames') }}" class="btn btn-continue-shopping">Back to Games</a>
 </div>
+
 <div class="row mt-3"></div>
 @endsection
