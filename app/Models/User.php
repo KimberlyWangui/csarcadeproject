@@ -24,6 +24,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'usertype',
         'registration',
+        'has_used_promo_code'
     ];
 
     /**
@@ -44,6 +45,7 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
         'registration' => 'datetime',
+        'has_used_promo_code' => 'boolean',
     ];
 
     /**
@@ -56,4 +58,5 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $this->attributes['password'] = bcrypt($value);
     }
+    
 }

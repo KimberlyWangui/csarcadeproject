@@ -125,17 +125,50 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   
     // Promotional code application
+   
+  // public/assets/js/tickets.js
+document.addEventListener('DOMContentLoaded', function() {
+    // ... existing code ...
+
     const applyPromoCodeBtn = document.querySelector('.apply-promo-code');
     if (applyPromoCodeBtn) {
         applyPromoCodeBtn.addEventListener('click', function(e) {
             e.preventDefault();
             const promoCode = document.getElementById('promo-code').value;
-            // Here you would typically send an AJAX request to validate the promo code
-            // For this example, we'll just simulate a successful application
-            document.getElementById('promo-code-result').innerHTML = `<p>Promo code <strong>${promoCode}</strong> applied successfully!</p>`;
+            
+            fetch('/apply-promo-code', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                },
+                body: JSON.stringify({ promo_code: promoCode })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('promo-code-result').innerHTML = `
+                        <p class="text-success">Promo code applied successfully!</p>
+                        <p>Discount: ${data.discount_amount} KSH</p>
+                        <p>New Total: ${data.new_total} KSH</p>
+                    `;
+                    // Update the total amount displayed on the page
+                    document.getElementById('total-amount').textContent = data.new_total;
+                } else {
+                    document.getElementById('promo-code-result').innerHTML = `
+                        <p class="text-danger">${data.error}</p>
+                    `;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('promo-code-result').innerHTML = `
+                    <p class="text-danger">An error occurred. Please try again.</p>
+                `;
+            });
         });
     }
-  
+});
     // Proceed button functionality
     const proceedBtn = document.querySelector('.proceed-btn');
     if (proceedBtn) {

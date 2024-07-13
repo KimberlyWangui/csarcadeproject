@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Ticket;
 use App\Models\CartItem;
+use App\Models\PromotionCode;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use App\Services\MpesaService;
 use Illuminate\Support\Facades\Log;
+
 class TicketCartController extends Controller
 {
     public function addToCart($id)
@@ -149,55 +152,110 @@ class TicketCartController extends Controller
     {
         $cartItems = $this->getCartItems();
         $totalAmount = $this->calculateTotalAmount($cartItems);
-        return view('payment.pay', compact('cartItems', 'totalAmount'));
+        $discountAmount = session('discount_amount', 0);
+        $finalTotal = $totalAmount - $discountAmount;
+        return view('payment.pay', compact('cartItems', 'totalAmount', 'discountAmount', 'finalTotal'));
     }
-  
+
     public function processPayment(Request $request)
-{
-    $request->validate([
-        'phone_number' => 'required|regex:/^254\d{9}$/',
-    ]);
+    {
+        $request->validate([
+            'phone_number' => 'required|regex:/^254\d{9}$/',
+        ]);
 
-    $cartItems = $this->getCartItems();
-    $totalAmount = $this->calculateTotalAmount($cartItems);
+        $cartItems = $this->getCartItems();
+        $totalAmount = $this->calculateTotalAmount($cartItems);
+        $discountAmount = session('discount_amount', 0);
+        $finalTotal = $totalAmount - $discountAmount;
 
-    $mpesaService = new MpesaService();
-    $response = $mpesaService->stkPush(
-        $request->phone_number,
-        $totalAmount,
-        'TICKET' . time()
-    );
+        $mpesaService = new MpesaService();
+        $response = $mpesaService->stkPush(
+            $request->phone_number,
+            $finalTotal,
+            'TICKET' . time()
+        );
 
-    if (isset($response['ResponseCode']) && $response['ResponseCode'] == "0") {
-        session(['mpesa_checkout_request_id' => $response['CheckoutRequestID']]);
-        return redirect()->route('payment.waiting')->with('success', 'Please complete the payment on your phone.');
-    } else {
-        Log::error('M-Pesa Payment Initiation Failed', ['response' => $response]);
-        return back()->with('error', 'Failed to initiate payment. Please try again. Error: ' . ($response['errorMessage'] ?? 'Unknown error'));
+        if (isset($response['ResponseCode']) && $response['ResponseCode'] == "0") {
+            session(['mpesa_checkout_request_id' => $response['CheckoutRequestID']]);
+            return redirect()->route('payment.waiting')->with('success', 'Please complete the payment on your phone.');
+        } else {
+            Log::error('M-Pesa Payment Initiation Failed', ['response' => $response]);
+            return back()->with('error', 'Failed to initiate payment. Please try again. Error: ' . ($response['errorMessage'] ?? 'Unknown error'));
+        }
+    }
+
+    public function waitForPayment()
+    {
+        return view('payment.waiting');
+    }
+
+    public function confirmPayment(Request $request)
+    {
+        // This method will be called by the M-Pesa API
+        // Implement the logic to confirm the payment and update your database
+    }
+
+    public function checkPaymentStatus()
+    {
+        // TODO: Implement logic to check payment status
+        // This could involve checking your database or making an API call to M-Pesa
+        
+        // For now, we'll just return a random status
+        $statuses = ['pending', 'completed', 'failed'];
+        $status = $statuses[array_rand($statuses)];
+        
+        return response()->json(['status' => $status]);
+    }
+
+    public function applyPromoCode(Request $request)
+    {
+        $request->validate([
+            'promo_code' => 'required|string',
+        ]);
+
+        $promoCode = PromotionCode::where('code', $request->promo_code)->first();
+
+        if (!$promoCode) {
+            return response()->json(['error' => 'Invalid promotion code'], 400);
+        }
+
+        $cartItems = $this->getCartItems();
+        $totalAmount = $this->calculateTotalAmount($cartItems);
+
+        if ($totalAmount < $promoCode->minimum_cart_value) {
+            return response()->json(['error' => 'Cart total does not meet the minimum required value'], 400);
+        }
+
+        if ($promoCode->first_time_only && $this->userHasUsedPromoCode()) {
+            return response()->json(['error' => 'This promotion is for first-time users only'], 400);
+        }
+
+        $discountAmount = $totalAmount * ($promoCode->discount_percentage / 100);
+        $newTotal = $totalAmount - $discountAmount;
+
+        // Store the promo code usage
+        if (Auth::check()) {
+            Auth::user()->update(['has_used_promo_code' => true]);
+        } else {
+            Session::put('has_used_promo_code', true);
+        }
+
+        session(['promo_code' => $promoCode->code, 'discount_amount' => $discountAmount]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Promotion code applied successfully',
+            'discount_amount' => $discountAmount,
+            'new_total' => $newTotal
+        ]);
+    }
+
+    private function userHasUsedPromoCode()
+    {
+        if (Auth::check()) {
+            return Auth::user()->has_used_promo_code;
+        } else {
+            return Session::has('has_used_promo_code');
+        }
     }
 }
-       
-    
-        public function waitForPayment()
-        {
-            return view('payment.waiting');
-        }
-    
-        public function confirmPayment(Request $request)
-        {
-            // This method will be called by the M-Pesa API
-            // Implement the logic to confirm the payment and update your database
-        }
-    
-        public function checkPaymentStatus()
-        {
-            // TODO: Implement logic to check payment status
-            // This could involve checking your database or making an API call to M-Pesa
-            
-            // For now, we'll just return a random status
-            $statuses = ['pending', 'completed', 'failed'];
-            $status = $statuses[array_rand($statuses)];
-            
-            return response()->json(['status' => $status]);
-        }
-    }

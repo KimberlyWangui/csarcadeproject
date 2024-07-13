@@ -113,4 +113,6 @@ Route::get('/check-payment-status', [TicketCartController::class, 'checkPaymentS
 
 });
 
+// routes/web.php
+Route::post('/apply-promo-code', [TicketCartController::class, 'applyPromoCode'])->name('cart.apply-promo');
 

@@ -42,13 +42,12 @@
                     </div>
                     <div class="form-group mt-4">
                         <label for="amount">Amount (KSH)</label>
-                        <input type="text" class="form-control" id="amount" name="amount" value="{{ $totalAmount }}" readonly>
+                        <input type="text" class="form-control" id="amount" name="amount" value="{{ $finalTotal }}" readonly>
                     </div>
                     <button type="submit" class="btn btn-primary btn-block mt-3">Pay Now</button>
                 </form>
             </div>
         </div>
-        
 
         <!-- Right Section: Order Information -->
         <div class="col-md-4 d-flex flex-column justify-content-between">
@@ -64,7 +63,17 @@
                 </div>
             </div>
             <div class="mt-3 pt-2 border-top">
-                <strong>Total: KSH{{ $totalAmount }}</strong>
+                <p>Subtotal: KSH{{ $totalAmount }}</p>
+                @if($discountAmount > 0)
+                    <p>Discount: KSH{{ $discountAmount }}</p>
+                @endif
+                <strong>Total: KSH<span id="total-amount">{{ $finalTotal }}</span></strong>
+            </div>
+            <!-- Promotion code form -->
+            <div class="promo-code-form mt-3">
+                <input type="text" id="promo-code" class="form-control" placeholder="Enter promo code">
+                <button class="btn btn-secondary mt-2 apply-promo-code">Apply</button>
+                <div id="promo-code-result" class="mt-2"></div>
             </div>
         </div>
     </div>
@@ -79,4 +88,46 @@
         min-height: 400px; /* Adjust this value to make the form longer if needed */
     }
 </style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const applyPromoCodeBtn = document.querySelector('.apply-promo-code');
+    if (applyPromoCodeBtn) {
+        applyPromoCodeBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const promoCode = document.getElementById('promo-code').value;
+            
+            fetch('{{ route("cart.apply-promo") }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({ promo_code: promoCode })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('promo-code-result').innerHTML = `
+                        <p class="text-success">Promo code applied successfully!</p>
+                        <p>Discount: KSH${data.discount_amount}</p>
+                    `;
+                    document.getElementById('total-amount').textContent = data.new_total;
+                    document.getElementById('amount').value = data.new_total;
+                } else {
+                    document.getElementById('promo-code-result').innerHTML = `
+                        <p class="text-danger">${data.error}</p>
+                    `;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('promo-code-result').innerHTML = `
+                    <p class="text-danger">An error occurred. Please try again.</p>
+                `;
+            });
+        });
+    }
+});
+</script>
 @endsection
