@@ -184,28 +184,19 @@ class TicketCartController extends Controller
             Log::error('M-Pesa Payment Initiation Failed', ['response' => $response]);
             return back()->with('error', 'Failed to initiate payment. Please try again.');
         }
-        if (isset($response['CheckoutRequestID'])) {
-            session([
-                'mpesa_checkout_request_id' => $response['CheckoutRequestID'],
-                'payment_amount' => $finalTotal,
-                'phone_number' => $request->phone_number
-            ]);
-            return redirect()->route('payment.waiting');
-        }
+          if (isset($response['CheckoutRequestID'])) {
+        session([
+            'mpesa_checkout_request_id' => $response['CheckoutRequestID'],
+            'payment_amount' => $finalTotal,
+            'phone_number' => $request->phone_number
+        ]);
+        return redirect()->route('payment.waiting');
+    }
     }
 
     public function waitForPayment()
     {
-        $checkoutRequestId = session('mpesa_checkout_request_id');
-    $amount = session('payment_amount');
-    $phoneNumber = session('phone_number');
-
-    if (!$checkoutRequestId || !$amount || !$phoneNumber) {
-        return redirect()->route('cart.checkout')->with('error', 'Invalid payment session');
-    }
-
-    return view('payment.waiting', compact('amount', 'phoneNumber'));
-        
+        return view('payment.waiting');
     }
 
     public function confirmPayment(Request $request)
@@ -253,22 +244,17 @@ class TicketCartController extends Controller
        
 
         // You might want to create a new Payment record in your database
-        Payment::create([
-            'user_id' => Auth::id(),
-            'amount' => $response['Amount'],
-            'transaction_id' => $response['MpesaReceiptNumber'],
-            'status' => 'completed'
-        ]);
+       
     }
 
     public function paymentSuccess()
     {
-        return view('payment.pay')->with('success', 'Payment successful!');
+        return view('payment.success')->with('success', 'Payment successful!');
     }
 
     public function paymentFailed()
     {
-        return view('payment.pay')->with('error', 'Payment failed. Please try again.');
+        return view('payment.fail')->with('error', 'Payment failed. Please try again.');
     }
 
     public function applyPromoCode(Request $request)

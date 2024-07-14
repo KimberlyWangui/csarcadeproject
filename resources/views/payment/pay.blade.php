@@ -3,6 +3,7 @@
 @section('title', 'Payment')
 
 @section('content')
+
 <div class="container mt-5">
     <div class="row bg-white p-4 rounded shadow payment-form">
         <!-- Left Section: Payment Method -->
