@@ -61,14 +61,18 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .then(response => response.json())
             .then(data => {
-                alert(data.message); // Show success or error message from backend
+                if (data.success) {
+                    alert(data.message);
+                    // Optionally update cart count or other UI elements
+                } else {
+                    alert('Error: ' + data.message);
+                }
             })
             .catch(error => {
                 console.error('Error:', error);
                 alert('Error adding game to cart');
             });
         });
-
     });
 
     // Slide navigation

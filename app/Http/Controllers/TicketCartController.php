@@ -150,13 +150,15 @@ class TicketCartController extends Controller
     }
 
     public function showCheckout()
-    {
-        $cartItems = $this->getCartItems();
-        $totalAmount = $this->calculateTotalAmount($cartItems);
-        $discountAmount = session('discount_amount', 0);
-        $finalTotal = $totalAmount - $discountAmount;
-        return view('payment.pay', compact('cartItems', 'totalAmount', 'discountAmount', 'finalTotal'));
-    }
+{
+    $cartItems = $this->getCartItems();
+    $totalAmount = $this->calculateTotalAmount($cartItems);
+    $discountAmount = session('discount_amount', 0);
+    $finalTotal = $totalAmount - $discountAmount;
+
+    return view('payment.pay', compact('cartItems', 'totalAmount', 'discountAmount', 'finalTotal'));
+}
+
     public function processPayment(Request $request)
     {
         $request->validate([
@@ -182,13 +184,28 @@ class TicketCartController extends Controller
             Log::error('M-Pesa Payment Initiation Failed', ['response' => $response]);
             return back()->with('error', 'Failed to initiate payment. Please try again.');
         }
+        if (isset($response['CheckoutRequestID'])) {
+            session([
+                'mpesa_checkout_request_id' => $response['CheckoutRequestID'],
+                'payment_amount' => $finalTotal,
+                'phone_number' => $request->phone_number
+            ]);
+            return redirect()->route('payment.waiting');
+        }
     }
-
-    
 
     public function waitForPayment()
     {
-        return view('payment.waiting');
+        $checkoutRequestId = session('mpesa_checkout_request_id');
+    $amount = session('payment_amount');
+    $phoneNumber = session('phone_number');
+
+    if (!$checkoutRequestId || !$amount || !$phoneNumber) {
+        return redirect()->route('cart.checkout')->with('error', 'Invalid payment session');
+    }
+
+    return view('payment.waiting', compact('amount', 'phoneNumber'));
+        
     }
 
     public function confirmPayment(Request $request)
@@ -225,6 +242,7 @@ class TicketCartController extends Controller
         // If we can't determine the status, assume it's still pending
         return response()->json(['status' => 'pending']);
     }
+
     private function handleSuccessfulPayment($response)
     {
         // Implement your logic to handle successful payment
@@ -232,7 +250,7 @@ class TicketCartController extends Controller
         Log::info('Payment successful', $response);
 
         // Clear the cart
-        $this->clearCart();
+       
 
         // You might want to create a new Payment record in your database
         Payment::create([
@@ -242,16 +260,16 @@ class TicketCartController extends Controller
             'status' => 'completed'
         ]);
     }
-    public function paymentSuccess()
-{
-    // Clear the cart, save the order, etc.
-    return view('payment.success');
-}
 
-public function paymentFailed()
-{
-    return view('payment.failed');
-}
+    public function paymentSuccess()
+    {
+        return view('payment.pay')->with('success', 'Payment successful!');
+    }
+
+    public function paymentFailed()
+    {
+        return view('payment.pay')->with('error', 'Payment failed. Please try again.');
+    }
 
     public function applyPromoCode(Request $request)
     {
@@ -268,41 +286,27 @@ public function paymentFailed()
         $cartItems = $this->getCartItems();
         $totalAmount = $this->calculateTotalAmount($cartItems);
 
-        if ($totalAmount < $promoCode->minimum_cart_value) {
-            return response()->json(['error' => 'Cart total does not meet the minimum required value'], 400);
-        }
-
-        if ($promoCode->first_time_only && $this->userHasUsedPromoCode()) {
-            return response()->json(['error' => 'This promotion is for first-time users only'], 400);
+        if ($totalAmount < $promoCode->minimum_order_amount) {
+            return response()->json(['error' => 'Total amount does not meet the minimum required value for this promo code'], 400);
         }
 
         $discountAmount = $totalAmount * ($promoCode->discount_percentage / 100);
-        $newTotal = $totalAmount - $discountAmount;
-
-        // Store the promo code usage
-        if (Auth::check()) {
-            Auth::user()->update(['has_used_promo_code' => true]);
-        } else {
-            Session::put('has_used_promo_code', true);
-        }
-
-        session(['promo_code' => $promoCode->code, 'discount_amount' => $discountAmount]);
+        session(['discount_amount' => $discountAmount]);
 
         return response()->json([
             'success' => true,
-            'message' => 'Promotion code applied successfully',
             'discount_amount' => $discountAmount,
-            'new_total' => $newTotal
+            'final_total' => $totalAmount - $discountAmount
         ]);
     }
 
-    private function userHasUsedPromoCode()
+    public function checkout()
     {
-        if (Auth::check()) {
-            return Auth::user()->has_used_promo_code;
-        } else {
-            return Session::has('has_used_promo_code');
-        }
-    }
+        $cartItems = $this->getCartItems();
+        $totalAmount = $this->calculateTotalAmount($cartItems);
+        $discountAmount = session('discount_amount', 0);
+        $finalTotal = $totalAmount - $discountAmount;
 
+        return view('checkout', compact('cartItems', 'totalAmount', 'discountAmount', 'finalTotal'));
+    }
 }

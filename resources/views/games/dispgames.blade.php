@@ -3,25 +3,24 @@
 @section('title', 'Display Games')
 
 @section('content')
-
 <div class="container5">
     <div id="slide">
         @foreach($games as $index => $game)
-        <div class="itemz" id="itemz-{{ $game->game_id }}">
+        <div class="itemz" id="itemz-{{ $game->id }}">
             <video src="{{ asset($game->video_path) }}"></video>
-            <div class="content" id="content-{{ $game->game_id }}">
+            <div class="content" id="content-{{ $game->id }}">
                 <div class="name">{{ $game->name }}</div>
                 <div class="des">{{ $game->description }}</div>
-                <button class="see-more" data-game-id="{{ $game->game_id }}">See more</button>
+                <button class="see-more" data-game-id="{{ $game->id }}">See more</button>
             </div>
-            <div class="additional-content" id="additional-content-{{ $game->game_id }}">
+            <div class="additional-content" id="additional-content-{{ $game->id }}">
                 <div class="more-details">If you would like to add {{ $game->name }} to cart, please click the button below.</div>
                 
-                <button class="add-to-cart" data-game-id="{{ $game->game_id }}">
+                <button class="add-to-cart" data-game-id="{{ $game->id }}">
                     Add to Cart <i class="lni lni-cart"></i>
                 </button>
                 
-                <button class="go-back" data-game-id="{{ $game->game_id }}">Go Back</button>
+                <button class="go-back" data-game-id="{{ $game->id }}">Go Back</button>
             </div>
         </div>
         @endforeach
@@ -38,6 +37,8 @@
 </div>
 
 <div class="row mt-3"></div>
+
+<meta name="csrf-token" content="{{ csrf_token() }}">
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <script src="{{ asset('/assets/js/games.js') }}"></script>

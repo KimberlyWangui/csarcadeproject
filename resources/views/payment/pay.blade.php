@@ -11,10 +11,11 @@
                 <h3>Payment Method</h3>
                 <div class="mt-3">
                     <h6>Payment by M-Pesa</h6>
+                    <p>Secure and convenient payment via M-Pesa</p>
                 </div>
             </div>
             <div class="mb-4">
-                <p>Secure and convenient payment via M-Pesa</p>
+                <a href="{{ route('cart.show') }}" class="btn-proceed cancel-order-btn" id="proceed-to-tickets">Cancel Order</a>
             </div>
         </div>
 
@@ -73,11 +74,25 @@
             <div class="promo-code-form mt-3">
                 <input type="text" id="promo-code" class="form-control" placeholder="Enter promo code">
                 <button class="btn btn-secondary mt-2 apply-promo-code">Apply</button>
+              
                 <div id="promo-code-result" class="mt-2"></div>
+
             </div>
         </div>
+
+    </div>
+
+    <div class="row mt-3"></div>
+    <div class="proceed-to-tickets">
+        <a href="{{ route('buy.tickets') }}" class="btn-proceed" id="proceed-to-tickets">Back to Tickets</a>
+        <div class="row mt-3"></div>
+        <form action="{{ route('cart.clear') }}" method="POST" id="clear-cart-form">
+            @csrf
+            <button type="submit" class="btn btn-warning clear-cart-btn">Clear Cart</button>
+        </form>
     </div>
     <div class="row mt-3"></div>
+
 </div>
 
 <style>
@@ -128,6 +143,23 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
+
+    const clearCartBtn = document.querySelector('.clear-cart-btn');
+    const cancelOrderBtn = document.querySelector('.cancel-order-btn');
+
+    clearCartBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        if (confirm('Are you sure you want to clear the cart?')) {
+            document.getElementById('clear-cart-form').submit();
+        }
+    });
+
+    cancelOrderBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        if (confirm('Are you sure you want to cancel the order?')) {
+            window.location.href = cancelOrderBtn.getAttribute('href');
+        }
+    });
 });
 </script>
 @endsection

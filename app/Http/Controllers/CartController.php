@@ -42,7 +42,7 @@ class CartController extends Controller
         return response()->json([
             'message' => 'Game added to cart successfully!',
             'status' => 'success',
-            'quantity' => $cart ? $cart->quantity : 1
+            
         ]);
     }
 
