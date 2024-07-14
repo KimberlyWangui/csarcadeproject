@@ -96,6 +96,8 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
    Route::get('admin/promotion', [PromotionsSectionController::class, 'index']);
    Route::post('admin/save-promotion', [PromotionsSectionController::class, 'store']);
    Route::get('admin/edit-promotion/{id}', [PromotionsSectionController::class, 'edit']);
+   Route::put('admin/promotion-update/{id}', [PromotionsSectionController::class, 'update']);
+   Route::delete('admin/promotion-delete/{id}', [PromotionsSectionController::class, 'delete']);
   
    
 });

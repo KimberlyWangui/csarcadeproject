@@ -32,4 +32,21 @@ class PromotionsSectionController extends Controller
         ->with('PromotionCode', $PromotionCode);
     }
 
+    public function update(Request $request, $id){
+        $PromotionCode = PromotionCode::find($id);
+        $PromotionCode->code = $request->input('code');
+        $PromotionCode->discount_percentage = $request->input('discount_percentage');
+        $PromotionCode->first_time_only = $request->input('first_time_only');
+        $PromotionCode->minimum_cart_value = $request->input('minimum_cart_value');
+
+        $PromotionCode->update();
+        return redirect('/admin/promotion')->with('status', 'The Promotion Code has been updated successfully');
+    }
+
+    public function delete($id){
+        $PromotionCode = PromotionCode::find($id);
+        $PromotionCode->delete();
+        return redirect('/admin/promotion')->with('status', 'The Promotion Code has been deleted successfully');
+    }
+
 }

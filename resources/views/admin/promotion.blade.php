@@ -85,7 +85,11 @@
                         <a href="{{url('admin/edit-promotion/'.$promotion->id)}}" class="btn btn-success">Edit</a>
                       </td>
                       <td>
-                        <a href="#" class="btn btn-danger">Delete</a>
+                      <form action="/admin/promotion-delete/{{$promotion->id}}" method="POST">
+                            {{ csrf_field() }}
+                            {{ method_field('DELETE') }}
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
                       </td>
                     </tr>
                     @endforeach
