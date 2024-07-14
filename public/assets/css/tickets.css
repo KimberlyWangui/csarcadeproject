@@ -160,5 +160,10 @@ h2{
     max-width: 70%;
     height: auto;
 }
+h6 {
+  color: #E0115F;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
 
 

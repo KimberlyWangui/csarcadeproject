@@ -26,10 +26,13 @@
 </div>
 <div id="calendar"></div>
 
-          
+<div class="row mt-5">
+
+</div>
+
         <div class="row justify-content-center">
             <div class="col-md-8 text-center text-white">
-                <h3 class="mb-4">GET YOUR TICKETS BELOW!!!</h3>
+                <h4 class="mb-4">GET YOUR TICKETS BELOW!!!</h4>
             </div>
         </div>
         
@@ -74,17 +77,13 @@
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-body text-center">
-                        <h4 class="card-title">Promotional Code</h4>
+                        <h4 class="card-title">Promotional Codes</h4>
                         <div class="video-placeholder">
                             <video src="{{ asset('assets/images/promo.mp4') }}" class="img-fluid" autoplay muted
                                 loop></video>
                         </div>
-                        <p class="card-text">Enter your promotional code:</p>
-                        <div class="input-group mb-3">
-                            <input type="text" id="promo-code" class="form-control" placeholder="Enter code"
-                                aria-label="Enter code" aria-describedby="apply-code-button">
-                        </div>
-                        <button class="btn btn-primary mt-3 apply-promo-code">Apply</button>
+                        <h6 class="card-text">Proceed to checkout to redeem promo codes</h6>
+                        
                     </div>
                 </div>
             </div>

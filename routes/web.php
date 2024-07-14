@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\ProfileController;
+
 use App\Http\Controllers\CartController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
@@ -110,9 +111,12 @@ Route::prefix('cart')->group(function () {
 Route::get('/payment-waiting', [TicketCartController::class, 'waitForPayment'])->name('payment.waiting');
 Route::post('/confirm-payment', [TicketCartController::class, 'confirmPayment'])->name('payment.confirm');
 Route::get('/check-payment-status', [TicketCartController::class, 'checkPaymentStatus'])->name('payment.check-status');
+Route::get('/payment/success', [TicketCartController::class, 'paymentSuccess'])->name('payment.success');
+Route::get('/payment/failed', [TicketCartController::class, 'paymentFailed'])->name('payment.failed');
 
 });
 
 // routes/web.php
 Route::post('/apply-promo-code', [TicketCartController::class, 'applyPromoCode'])->name('cart.apply-promo');
+
 

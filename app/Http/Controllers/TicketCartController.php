@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Ticket;
 use App\Models\CartItem;
 use App\Models\PromotionCode;
+use App\Models\Payment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\Services\MpesaService;
@@ -156,7 +157,6 @@ class TicketCartController extends Controller
         $finalTotal = $totalAmount - $discountAmount;
         return view('payment.pay', compact('cartItems', 'totalAmount', 'discountAmount', 'finalTotal'));
     }
-
     public function processPayment(Request $request)
     {
         $request->validate([
@@ -175,14 +175,16 @@ class TicketCartController extends Controller
             'TICKET' . time()
         );
 
-        if (isset($response['ResponseCode']) && $response['ResponseCode'] == "0") {
+        if (isset($response['CheckoutRequestID'])) {
             session(['mpesa_checkout_request_id' => $response['CheckoutRequestID']]);
             return redirect()->route('payment.waiting')->with('success', 'Please complete the payment on your phone.');
         } else {
             Log::error('M-Pesa Payment Initiation Failed', ['response' => $response]);
-            return back()->with('error', 'Failed to initiate payment. Please try again. Error: ' . ($response['errorMessage'] ?? 'Unknown error'));
+            return back()->with('error', 'Failed to initiate payment. Please try again.');
         }
     }
+
+    
 
     public function waitForPayment()
     {
@@ -197,15 +199,59 @@ class TicketCartController extends Controller
 
     public function checkPaymentStatus()
     {
-        // TODO: Implement logic to check payment status
-        // This could involve checking your database or making an API call to M-Pesa
+        $checkoutRequestId = session('mpesa_checkout_request_id');
         
-        // For now, we'll just return a random status
-        $statuses = ['pending', 'completed', 'failed'];
-        $status = $statuses[array_rand($statuses)];
-        
-        return response()->json(['status' => $status]);
+        if (!$checkoutRequestId) {
+            return response()->json(['status' => 'failed', 'message' => 'Invalid checkout request']);
+        }
+
+        $mpesaService = new MpesaService();
+        $response = $mpesaService->stkQuery($checkoutRequestId);
+
+        if (isset($response['ResultCode'])) {
+            if ($response['ResultCode'] == 0) {
+                // Payment successful
+                $this->handleSuccessfulPayment($response);
+                return response()->json(['status' => 'completed']);
+            } elseif ($response['ResultCode'] == 1032) {
+                // Transaction cancelled by user
+                return response()->json(['status' => 'failed', 'message' => 'Transaction cancelled']);
+            } else {
+                // Other failure
+                return response()->json(['status' => 'failed', 'message' => $response['ResultDesc']]);
+            }
+        }
+
+        // If we can't determine the status, assume it's still pending
+        return response()->json(['status' => 'pending']);
     }
+    private function handleSuccessfulPayment($response)
+    {
+        // Implement your logic to handle successful payment
+        // This might include updating the order status, clearing the cart, etc.
+        Log::info('Payment successful', $response);
+
+        // Clear the cart
+        $this->clearCart();
+
+        // You might want to create a new Payment record in your database
+        Payment::create([
+            'user_id' => Auth::id(),
+            'amount' => $response['Amount'],
+            'transaction_id' => $response['MpesaReceiptNumber'],
+            'status' => 'completed'
+        ]);
+    }
+    public function paymentSuccess()
+{
+    // Clear the cart, save the order, etc.
+    return view('payment.success');
+}
+
+public function paymentFailed()
+{
+    return view('payment.failed');
+}
 
     public function applyPromoCode(Request $request)
     {
@@ -258,4 +304,5 @@ class TicketCartController extends Controller
             return Session::has('has_used_promo_code');
         }
     }
+
 }
