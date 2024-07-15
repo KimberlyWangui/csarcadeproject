@@ -115,7 +115,7 @@ Route::prefix('cart')->group(function () {
     Route::get('/show-checkout', [TicketCartController::class, 'showCheckout'])->name('cart.checkout');
     Route::get('/checkout', [TicketCartController::class, 'checkout'])->name('checkout');
     Route::post('/process-payment', [TicketCartController::class, 'processPayment'])->name('cart.process-payment');
-
+  
 Route::get('/payment-waiting', [TicketCartController::class, 'waitForPayment'])->name('payment.waiting');
 Route::post('/confirm-payment', [TicketCartController::class, 'confirmPayment'])->name('payment.confirm');
 Route::get('/check-status', [TicketCartController::class, 'checkPaymentStatus'])->name('payment.check-status');
@@ -126,6 +126,8 @@ Route::get('/payment/failed', [TicketCartController::class, 'paymentFailed'])->n
 
 // routes/web.php
 Route::post('/apply-promo-code', [TicketCartController::class, 'applyPromoCode'])->name('cart.apply-promo');
+
+
 
 
 

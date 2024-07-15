@@ -30,10 +30,13 @@ class MpesaCallbackController extends Controller
         $mpesaReceiptNumber = $callbackData['Body']['stkCallback']['CallbackMetadata']['Item'][1]['Value'];
         $transactionDate = $callbackData['Body']['stkCallback']['CallbackMetadata']['Item'][3]['Value'];
         $phoneNumber = $callbackData['Body']['stkCallback']['CallbackMetadata']['Item'][4]['Value'];
+    
 
+    
         Payment::updateOrCreate(
             ['transaction_id' => $transactionId],
             [
+       
                 'amount' => $amount,
                 'status' => 'completed',
                 'mpesa_receipt_number' => $mpesaReceiptNumber,
@@ -41,7 +44,7 @@ class MpesaCallbackController extends Controller
                 'phone_number' => $phoneNumber
             ]
         );
-
+    
         Log::info('Payment successful', compact('transactionId', 'amount', 'mpesaReceiptNumber', 'transactionDate', 'phoneNumber'));
     }
 
