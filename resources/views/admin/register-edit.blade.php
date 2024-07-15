@@ -33,7 +33,7 @@
                   <option value="Customer">Customer</option>
                 </select>
                 </div>
-                <button type="submit" class="btn btn-success">Update</button>
+                <button type="submit" class="btn btn-primary">Update</button>
                 <a href="/admin/role-register" class="btn btn-danger">Cancel</a>
               </form>
               </div>

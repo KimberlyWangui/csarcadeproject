@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\Services\MpesaService;
 use Illuminate\Support\Facades\Log;
+use App\Models\Booking;
 
 class TicketCartController extends Controller
 {
@@ -244,6 +245,18 @@ class TicketCartController extends Controller
        
 
         // You might want to create a new Payment record in your database
+
+        $cartItems = $this->getCartItems();
+
+        // Save each item in cart as a booking
+    foreach ($cartItems as $cartItem) {
+        Booking::create([
+            'user_id' => Auth::id(),
+            'ticket_id' => $cartItem['id'],
+            'quantity' => $cartItem['quantity'],
+            'amount' => $cartItem['total_amount']
+        ]);
+    }
        
     }
 

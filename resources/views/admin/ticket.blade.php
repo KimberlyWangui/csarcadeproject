@@ -77,7 +77,7 @@
                       <td>{{$ticket->price}}</td>
                       <td>{{$ticket->description}}</td>
                       <td>
-                        <a href="{{url('admin/edit-tickets/'.$ticket->id)}}" class="btn btn-success">Edit</a>
+                        <a href="{{url('admin/edit-tickets/'.$ticket->id)}}" class="btn btn-primary">Edit</a>
                       </td>
                       <td>
                       <form action="/admin/ticket-delete/{{$ticket->id}}" method="POST">

@@ -82,7 +82,7 @@
                       <td>{{$promotion->first_time_only}}</td>
                       <td>{{$promotion->minimum_cart_value}}</td>
                       <td>
-                        <a href="{{url('admin/edit-promotion/'.$promotion->id)}}" class="btn btn-success">Edit</a>
+                        <a href="{{url('admin/edit-promotion/'.$promotion->id)}}" class="btn btn-primary">Edit</a>
                       </td>
                       <td>
                       <form action="/admin/promotion-delete/{{$promotion->id}}" method="POST">

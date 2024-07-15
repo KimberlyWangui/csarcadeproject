@@ -11,6 +11,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Admin\GameSectionController;
 use App\Http\Controllers\Admin\TicketSectionController;
 use App\Http\Controllers\Admin\PromotionsSectionController;
+use App\Http\Controllers\Admin\BookingController;
 
 Route::get('/', function () {
     return view('home');
@@ -99,6 +100,11 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
    Route::get('admin/edit-promotion/{id}', [PromotionsSectionController::class, 'edit']);
    Route::put('admin/promotion-update/{id}', [PromotionsSectionController::class, 'update']);
    Route::delete('admin/promotion-delete/{id}', [PromotionsSectionController::class, 'delete']);
+
+   Route::get('admin/bookings', [BookingController::class, 'index']);
+   Route::get('admin/edit-booking/{id}', [BookingController::class, 'edit']);
+   Route::put('admin/booking-update/{id}', [BookingController::class, 'update']);
+   Route::delete('admin/booking-delete/{id}', [BookingController::class, 'delete']);
   
    
 });
