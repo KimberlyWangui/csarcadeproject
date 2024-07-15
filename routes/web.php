@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\CartController;
 use Illuminate\Support\Facades\Route;
@@ -12,6 +13,8 @@ use App\Http\Controllers\Admin\GameSectionController;
 use App\Http\Controllers\Admin\TicketSectionController;
 use App\Http\Controllers\Admin\PromotionsSectionController;
 use App\Http\Controllers\Admin\BookingController;
+use App\Models\User;
+use App\Models\Booking;
 
 Route::get('/', function () {
     return view('home');
@@ -30,6 +33,14 @@ Route::get('/contact', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/dashboard', function () {
+    $user = Auth::user();
+    $bookings = $user->bookings; // Retrieve user's bookings
+
+    return view('dashboard', compact('user', 'bookings'));
+})->middleware(['auth', 'verified'])->name('dashboard');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

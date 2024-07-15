@@ -25,7 +25,30 @@
                         <div class="space-y-4">
                             <h3 class="text-lg font-semibold mb-2">{{ __('Booking History') }}</h3>
                             <!-- Display booking history here -->
-                            
+                            @if($bookings->isEmpty())
+                                <p>{{ __('You have no bookings yet.') }}</p>
+                            @else
+                                <table class="min-w-full bg-white border border-gray-200">
+                                    <thead>
+                                        <tr>
+                                            <th class="py-2 px-4 border-b">Ticket Type</th>
+                                            <th class="py-2 px-4 border-b">Quantity</th>
+                                            <th class="py-2 px-4 border-b">Amount (KSH)</th>
+                                            <th class="py-2 px-4 border-b">Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($bookings as $booking)
+                                            <tr>
+                                                <td class="py-2 px-4 border-b">{{ $booking->ticket_type }}</td>
+                                                <td class="py-2 px-4 border-b">{{ $booking->quantity }}</td>
+                                                <td class="py-2 px-4 border-b">{{ $booking->amount }}</td>
+                                                <td class="py-2 px-4 border-b">{{ $booking->created_at->format('d M Y') }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            @endif
                         </div>
 
                         <!-- Offers and Discounts -->
