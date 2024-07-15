@@ -17,16 +17,17 @@
               <form action="/admin/role-register-update/{{$users->userid}}" method="POST">
                 {{csrf_field()}}
                 {{method_field('PUT')}}
+                
                 <div class="form-group">
-                <label>Name</label>
+                <label class="font-weight-bold">NAME:</label>
                 <input type="text" name="username" value="{{$users->username}}" class="form-control">
                 </div>
                 <div class="form-group">
-                <label>Email</label>
+                <label class="font-weight-bold">EMAIL:</label>
                 <input type="email" name="email" value="{{$users->email}}" class="form-control">
                 </div>
                 <div class="form-group">
-                <label>Give Role</label>
+                <label class="font-weight-bold">GIVE ROLE:</label>
                 <select name="usertype" class="form-control">
                   <option value="admin">Admin</option>
                   <option value="Customer">Customer</option>
@@ -39,7 +40,6 @@
             </div>
           </div>
         </div>
-      </div>
      
 @endsection
 
