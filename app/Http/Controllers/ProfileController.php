@@ -91,4 +91,5 @@ class ProfileController extends Controller
         }
         session()->forget('cart');
     }
+    
 }

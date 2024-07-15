@@ -6,39 +6,41 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Booking;
 
+
 class BookingController extends Controller
 {
     public function index()
     {
-        $Bookings = Booking::all();
-        return view('admin.booking')
-        ->with('Bookings', $Bookings);
+        $bookings = Booking::all();
+        return view('admin.booking.index', compact('bookings'));
     }
 
     public function edit($id)
     {
-        $Booking = Booking::find($id);
-        return view('admin.booking.edit')
-        ->with('Booking', $Booking);
+        $booking = Booking::findOrFail($id);
+        return view('admin.booking.edit', compact('booking'));
     }
 
     public function update(Request $request, $id)
     {
-        $Booking = Booking::find($id);
-        $Booking->user_id = $request->input('user_id');
-        $Booking->ticket_id = $request->input('ticket_id');
-        $Booking->ticket_type = $request->input('ticket_type');
-        $Booking->quantity = $request->input('quantity');
-        $Booking->amount = $request->input('amount');
-        $Booking->update();
-        return redirect('/admin/bookings')->with('status', 'The booking has been updated successfully');
+        $booking = Booking::findOrFail($id);
+        $booking->user_id = $request->input('user_id');
+        $booking->ticket_id = $request->input('ticket_id');
+        $booking->ticket_type = $request->input('ticket_type');
+        $booking->quantity = $request->input('quantity');
+        $booking->amount = $request->input('amount');
+        $booking->update();
+
+        return redirect('admin/bookings')->with('status', 'The booking has been updated successfully');
     }
 
     public function delete($id)
     {
-        $Booking = Booking::find($id);
-        $Booking->delete();
-        return redirect('/admin/bookings')->with('status', 'The booking has been deleted successfully');
+        $booking = Booking::findOrFail($id);
+        $booking->delete();
+
+        return redirect('admin/bookings')->with('status', 'The booking has been deleted successfully');
     }
 
+  
 }

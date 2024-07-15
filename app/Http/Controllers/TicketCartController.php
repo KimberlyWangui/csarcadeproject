@@ -13,6 +13,7 @@ use App\Services\MpesaService;
 use Illuminate\Support\Facades\Log;
 use App\Models\Booking;
 
+
 class TicketCartController extends Controller
 {
     public function addToCart($id)
@@ -257,6 +258,7 @@ class TicketCartController extends Controller
             'amount' => $cartItem['total_amount']
         ]);
     }
+    
        
     }
 

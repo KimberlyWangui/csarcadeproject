@@ -105,7 +105,7 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
    Route::get('admin/edit-booking/{id}', [BookingController::class, 'edit']);
    Route::put('admin/booking-update/{id}', [BookingController::class, 'update']);
    Route::delete('admin/booking-delete/{id}', [BookingController::class, 'delete']);
-  
+   Route::get('/user/{user}/bookings', [BookingController::class, 'userBookings'])->name('user.bookings');
    
 });
 
@@ -139,3 +139,4 @@ Route::post('/apply-promo-code', [TicketCartController::class, 'applyPromoCode']
 
 Route::get('/another-page', [CartController::class, 'anotherPage'])->name('another.page');
 
+    
