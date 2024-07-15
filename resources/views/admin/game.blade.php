@@ -81,7 +81,7 @@
                       <td>{{$game->video_path}}</td>
                       <td>{{$game->description}}</td>
                       <td>
-                        <a href="{{url('admin/edit-games/'.$game->game_id)}}" class="btn btn-success">Edit</a>
+                        <a href="{{url('admin/edit-games/'.$game->game_id)}}" class="btn btn-primary">Edit</a>
                       </td>
                       <td>
                         <form action="/admin/game-delete/{{$game->game_id}}" method="POST">

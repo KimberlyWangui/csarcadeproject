@@ -1,16 +1,17 @@
 @extends('layouts.admin')
 
 @section('title')
-    AdminDashboard
+    Bookings
 @endsection
 
 @section('content')
+
 <div class="row">
         <div class="col-12">
           <div class="card my-4">
             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
               <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                <h6 class="text-white text-capitalize ps-3">Registered Roles</h6>
+                <h6 class="text-white text-capitalize ps-3">Booking Table</h6>
                 @if(Session('status'))
                 <div class="alert alert-success" role="alert">
                     {{Session('status')}}
@@ -24,37 +25,36 @@
                   <thead>
                     <tr>
                       <th>ID</th>
-                      <th>Name</th>
-                      <th>Email</th>
-                      <th>User Type</th>
-                      <th>Registration</th>
+                      <th>User ID</th>
+                      <th>Ticket ID</th>
+                      <th>Ticket Type</th>
+                      <th>Quantity</th>
+                      <th>Total Price</th>
+                      <th>Date</th>
                       <th>EDIT</th>
                       <th>DELETE</th>
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach($users as $row)
+                    @foreach ($Bookings as $booking)
                     <tr>
-                      <td>{{$row->userid}}</td>
-                      <td>{{$row->username}}</td>
-                      <td>{{$row->email}}</td>
-                      <td>{{$row->usertype}}</td>
-                      <td>{{$row->registration}}</td>
-                      <!--<td>
-                        <a href="/admin/role-edit{{$row->userid}}" class="btn btn-success">EDIT</a>
-                      </td>-->
+                      <td>{{$booking->id}}</td>
+                      <td>{{$booking->user_id}}</td>
+                      <td>{{$booking->ticket_id}}</td>
+                      <td>{{$booking->ticket_type}}</td>
+                      <td>{{$booking->quantity}}</td>
+                      <td>{{$booking->amount}}</td>
+                      <td>{{$booking->created_at}}</td>
                       <td>
-                        <a href="{{ route('admin.register-edit', $row->userid) }}" class="btn btn-primary">EDIT</a>
+                      <a href="{{url('admin/edit-booking/'.$booking->id)}}" class="btn btn-primary">Edit</a>
                       </td>
 
                       <td>
-                        <form action="/admin/role-delete/{{$row->userid}} " method="POST">
+                        <form action="/admin/booking-delete/{{$booking->id}} " method="POST">
                             {{csrf_field()}}
                             {{method_field('DELETE')}}
                         <button type="submit" class="btn btn-danger">DELETE</button>
                         </form>
-                       
-                      </td>
                     </tr>
                     @endforeach
                   </tbody>
@@ -64,10 +64,8 @@
           </div>
         </div>
       </div>
-     
+
 @endsection
 
 @section('scripts')
 @endsection
-
- 
