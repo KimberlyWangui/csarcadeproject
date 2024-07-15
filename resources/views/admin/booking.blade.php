@@ -32,7 +32,6 @@
                       <th>Total Price</th>
                       <th>Date</th>
                       <th>EDIT</th>
-                      <th>DELETE</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -49,12 +48,6 @@
                       <a href="{{url('admin/edit-booking/'.$booking->id)}}" class="btn btn-primary">Edit</a>
                       </td>
 
-                      <td>
-                        <form action="/admin/booking-delete/{{$booking->id}} " method="POST">
-                            {{csrf_field()}}
-                            {{method_field('DELETE')}}
-                        <button type="submit" class="btn btn-danger">DELETE</button>
-                        </form>
                     </tr>
                     @endforeach
                   </tbody>

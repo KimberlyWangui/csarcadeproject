@@ -104,9 +104,8 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
    Route::get('admin/bookings', [BookingController::class, 'index']);
    Route::get('admin/edit-booking/{id}', [BookingController::class, 'edit']);
    Route::put('admin/booking-update/{id}', [BookingController::class, 'update']);
-   Route::delete('admin/booking-delete/{id}', [BookingController::class, 'delete']);
-   Route::get('/user/{user}/bookings', [BookingController::class, 'userBookings'])->name('user.bookings');
-   
+  
+>>>>>>> 32430e0f62491aedd2f31fcaa2a9fff0767a0a3d
 });
 
 
