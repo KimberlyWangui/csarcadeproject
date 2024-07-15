@@ -22,9 +22,16 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link href="index.php" :active="request()->is('/')">
+                        {{ __('Home') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('games.dispGames')" :active="request()->routeIs('games.dispGames')">
                         {{ __('View Games') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('buy.tickets')" :active="request()->routeIs('tickets.buytickets')">
+                        {{ __('View Tickets') }}
+                    </x-nav-link>
+                    
                 </div>
             </div>
 
@@ -84,9 +91,16 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('games.dispGames')" :active="request()->routeIs('games.dispGames')">
-                {{ __('Games') }}
+            <x-responsive-nav-link href="index.php" :active="request()->is('/')">
+                {{ __('Home') }}
             </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('games.dispGames')" :active="request()->routeIs('games.dispGames')">
+                {{ __('View Games') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('buy.tickets')" :active="request()->routeIs('tickets.buytickets')">
+                {{ __('View Tickets') }}
+            </x-responsive-nav-link>
+            
         </div>
 
         <!-- Responsive Settings Options -->

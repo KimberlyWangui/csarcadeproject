@@ -72,25 +72,32 @@
                       <a class="page-scroll" href="/contact">Contact Us</a>
                     </li>
                      </li>
-                    <?php if(!auth()->check()): ?>
-                      <li class="nav-item">
-                        <a class="page-scroll" href="/register">Sign Up</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="page-scroll" href="/login">Sign In</a>
-                      </li>
-                    <?php else: ?>
-                      <li class="nav-item">
-                        <a class="page-scroll" href="<?php echo route('logout'); ?>"
-                           onclick="event.preventDefault();
-                                     document.getElementById('logout-form').submit();">
-                            Sign Out
-                        </a>
-                      </li>
-                      <form id="logout-form" action="<?php echo route('logout'); ?>" method="POST" style="display: none;">
-                        <?php echo csrf_field(); ?>
-                      </form>
-                    <?php endif; ?>
+                     <?php if(!auth()->check()): ?>
+                     <li class="nav-item">
+                         <a class="page-scroll" href="/register">Sign Up</a>
+                     </li>
+                     <li class="nav-item">
+                         <a class="page-scroll" href="/login">Sign In</a>
+                     </li>
+                     <?php else: ?>
+<li class="nav-item dropdown">
+<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="lni lni-cogs"></i>
+<?php echo auth()->user()->name; ?>
+</a>
+<div class="dropdown-menu" aria-labelledby="userDropdown">
+<a class="dropdown-item" href="/dashboard">Dashboard</a>
+<div class="dropdown-divider"></div>
+<a class="dropdown-item" href="<?php echo route('logout'); ?>"
+onclick="event.preventDefault();
+    document.getElementById('logout-form').submit();">
+Sign Out
+</a>
+</div>
+</li>
+<form id="logout-form" action="<?php echo route('logout'); ?>" method="POST" style="display: none;">
+<?php echo csrf_field(); ?>
+</form>
+<?php endif; ?>
                   </ul>
                 </div>
 
@@ -444,11 +451,13 @@
  
 
 <!--JS Links-->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     
     <script src="{{ asset('assets/index.js')}}"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </body>
 </html>

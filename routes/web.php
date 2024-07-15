@@ -128,3 +128,6 @@ Route::get('/payment/failed', [TicketCartController::class, 'paymentFailed'])->n
 Route::post('/apply-promo-code', [TicketCartController::class, 'applyPromoCode'])->name('cart.apply-promo');
 
 
+
+Route::get('/another-page', [CartController::class, 'anotherPage'])->name('another.page');
+

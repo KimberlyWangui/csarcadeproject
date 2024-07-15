@@ -25,6 +25,7 @@
                         <div class="space-y-4">
                             <h3 class="text-lg font-semibold mb-2">{{ __('Booking History') }}</h3>
                             <!-- Display booking history here -->
+                            
                         </div>
 
                         <!-- Offers and Discounts -->
@@ -35,7 +36,18 @@
                                 <h4 class="text-sm font-semibold">Special Offer</h4>
                                 <p class="text-gray-700">Get 20% off on your next booking!</p>
                             </div>
-                            <!-- Add more offers and discounts as needed -->
+
+                        
+                            
+                            <div class="mt-8">
+                                <h3 class="text-lg font-semibold mb-2">{{ __('Special Events') }}</h3>
+                                <!-- Display special events here -->
+                                <div class="border rounded-lg p-4 bg-gray-100">
+                                    <h4 class="text-sm font-semibold">8th August 2024</h4>
+                                    <p class="text-gray-700">The Arcade is hosting Naughty Dog Corp. Come one 
+                                        Come all!
+                                    </p>
+                                </div>
                         </div>
                     </div>
                 </div>

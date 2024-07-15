@@ -91,10 +91,12 @@
 
         <!-- Spacer -->
         <div class="row mt-3"></div>
-
         <div class="proceed-to-tickets">
-           
-            <a href="{{ route('cart.show') }}" class="btn-view-cart">Guest Cart</a>
+            @if(Auth::check())
+                <a href="{{ route('cart.show') }}" class="btn-view-cart">Your Cart</a>
+            @else
+                <a href="{{ route('cart.show') }}" class="btn-view-cart">Guest Cart</a>
+            @endif
             <a href="{{ route('cart.checkout') }}" class="btn-proceed">Check Out</a>
         </div>
 
