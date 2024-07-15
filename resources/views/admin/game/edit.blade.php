@@ -12,13 +12,13 @@
             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
               <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
                 <h6 class="text-white text-capitalize ps-3">Games Edit Data</h6>
-
-       <form action="/admin/game-edit/{{$games->game_id}}" method="POST">
-        {{ csrf_field() }}
-        {{ method_field('PUT') }}
-      <div class="modal-body">
+              </div>
+              <form action="/admin/game-edit/{{$games->game_id}}" method="POST">
+                {{ csrf_field() }}
+                {{ method_field('PUT') }}
+               <div class="modal-body">
         
-          <div class="mb-3">
+                <div class="mb-3">
             <label for="recipient-name" class="col-form-label">Name:</label>
             <input type="text" name="name" class="form-control" value="{{$games->name}}">
           </div>
@@ -36,8 +36,6 @@
         <button type="submit" class="btn btn-primary">UPDATE</button>
       </div>
       </form>
-
-              </div>
             </div>
             </div>
         </div>
