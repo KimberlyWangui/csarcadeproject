@@ -75,7 +75,6 @@
             <div class="promo-code-form mt-3">
                 <input type="text" id="promo-code" class="form-control" placeholder="Enter promo code">
                 <button class="btn btn-secondary mt-2 apply-promo-code">Apply</button>
-                <a href="{{ route('payment.history') }}">Payment History</a>
                 <div id="promo-code-result" class="mt-2"></div>
 
             </div>
