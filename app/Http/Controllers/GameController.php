@@ -104,7 +104,7 @@ class GameController extends Controller
         return view('games.dispgames', compact('games'));
     }
 
-    public function addGameToCart(Game $game)
+    /*public function addGameToCart(Game $game)
     {
         $gameCart = Session::get('game_cart', []);
         
@@ -126,13 +126,14 @@ class GameController extends Controller
             'message' => 'Game added to cart successfully',
             'game_cart' => $gameCart
         ]);
-    }
+    }*/
     
-    public function getGameCart()
+    /*public function getGameCart()
     {
         $gameCart = Session::get('game_cart', []);
         return response()->json([
             'success' => true,
             'game_cart' => $gameCart
         ]);
-    }}
+    }*/
+}
