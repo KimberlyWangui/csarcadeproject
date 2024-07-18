@@ -72,9 +72,6 @@ Route::middleware('auth')->group(function () {
 
 
 //Route for the admin page
-//Route::get('admin/dashboard', [AdminController::class, 'index'])->middleware(['auth','admin'])->name('admin.dashboard');
-
-//Route for the admin page
 Route::group(['middleware' => ['auth', 'admin']], function () {
    Route::get('admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
    Route::get('admin/role-register', [DashboardController::class, 'registered']);
