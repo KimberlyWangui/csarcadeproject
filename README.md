@@ -89,7 +89,7 @@ Whether you're looking to build a similar system or expand upon the existing fea
 
 ## Acknowledgments  
 - **Safaricom Developers Community**: For resources and support on integrating the M-Pesa Daraja API.  
-- **Laravel and Pygame Communities**: For extensive tutorials and forums that helped in development.
+- **Laravel**: For extensive tutorials and forums that helped in development.
 
 ## License  
 This project is open-source and available under the [MIT License](https://opensource.org/licenses/MIT).
