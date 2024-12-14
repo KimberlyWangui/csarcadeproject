@@ -10,7 +10,7 @@ The **Arcade Ticketing System** is a web-based application designed to streamlin
 - **Ticket Management**: Add tickets to your cart based on the group you choose.
 - **Payment Processing**: Integrated with the **M-Pesa Daraja API** for secure payments.
 - **Informative Pages**: Includes pages like *About Us* and *Contact Us* for user engagement.
-- **Admin Dashboard**: Provide CRUD operations for managing games and tickets.
+- **Admin Dashboard**: Provide CRUD operations for managing games, tickets and users.
 
   ---
 
